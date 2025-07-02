@@ -15,8 +15,10 @@
 - Entes gubernamentales.
 - 
 ## Dataset:
-- Turismo mundial (origen - destino - fecha - ingreso).
-- Desarrollo Económico Mundial (PIB/GDP - país - fecha).
+- Turismo mundial (Ingresos por turismo al país - Cuántos turistas llegaron al país - Cuánto representa el turismo en la economía exportadora - Cuánto gastaron los turistas nacionales fuera del país - etc.).
+- Desarrollo Económico Mundial (PIB/GDP) 
+
+https://databank.worldbank.org/reports.aspx?source=2&series=NY.GDP.MKTP.CD&country=#
 
 ## Requisitos:
 - Python 3.11.8
