@@ -4,9 +4,6 @@
 - Sebastián G.
 - Diego V.
 
-## Plots:
-- Scatter gdp/ingresos_por_turismo
-
 ## Objetivos:
 - Dar una visualización interactiva acerca del turismo mundial y el desarrollo económico.
 - Informar sobre evolución del turismo en los años.
@@ -20,3 +17,11 @@
 ## Dataset:
 - Turismo mundial (origen - destino - fecha - ingreso).
 - Desarrollo Económico Mundial (PIB/GDP - país - fecha).
+
+## Requisitos: (utilizar pip install -r libs.txt)
+- Python 3.11.8
+- dash==3.1.1
+- numpy==2.3.1
+- pandas==2.3.0
+- plotly==6.2.0
+
