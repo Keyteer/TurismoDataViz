@@ -18,10 +18,14 @@
 - Turismo mundial (origen - destino - fecha - ingreso).
 - Desarrollo Económico Mundial (PIB/GDP - país - fecha).
 
-## Requisitos: (utilizar pip install -r libs.txt)
+## Requisitos:
 - Python 3.11.8
 - dash==3.1.1
 - numpy==2.3.1
 - pandas==2.3.0
 - plotly==6.2.0
+
+(utilizar "pip install -r libs.txt" para instalar libs :p)
+
+(hacer "pip freeze > libs.txt" y avisar en caso de agregar libs :p)
 
