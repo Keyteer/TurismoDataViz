@@ -24,8 +24,6 @@ def df1(path = "Datasets/P_Data_Extract_From_World_Development_Indicators.xlsx")
     df1_largo["Value"] = pd.to_numeric(df1_largo["Value"], errors="coerce")
     # Eliminar filas cuyo valor es NaN
     df1_largo = df1_largo.dropna(subset=["Value"])
-    # Traducir países
-
 
     return df1_largo
 

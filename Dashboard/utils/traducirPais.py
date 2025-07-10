@@ -216,10 +216,13 @@ traducciones = {
     "Vanuatu": "Vanuatu"
 }
 
+traducciones_inversas = {v: k for k, v in traducciones.items()}
 
 def traducir_pais(nombre_pais):
     return traducciones.get(nombre_pais)
 
+def traducir_pais_inverso(nombre_pais_es):
+    return traducciones_inversas.get(nombre_pais_es)
 
 def verificar_paises_sin_traduccion(df, diccionario):
     paises_dataset = set(df["Country Name"].unique())
@@ -240,9 +243,9 @@ if __name__ == "__main__":
     from cargarDataframes import df1
     df = df1(path = "../Datasets/P_Data_Extract_From_World_Development_Indicators.xlsx")
     verificar_paises_sin_traduccion(df, traducciones)
-    pais = "Chile"
+    pais = "Maldives"
     traduccion = traducir_pais(pais)
     if traduccion:
-        print(f"La traducción de '{pais}' es '{traduccion}'.")
+        print(f"La traducción de '{traducir_pais_inverso(traduccion)}' es '{traduccion}'.")
     else:
         print(f"No se encontró traducción para '{pais}'.")
