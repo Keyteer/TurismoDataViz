@@ -2,12 +2,12 @@ import numpy as np  # útil para cómputos matemáticos en Python
 import pandas as pd  # biblioteca para estructuras de datos
 import folium
 
-url = 'https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/DV0101EN/labs/Data_Files'
-world_geo = f'{url}/world_countries.json'
+url = 'https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/DV0101EN/labs/Data_Files/world_countries.json'
+world_geo = '../utils/countries.geo.json'
 
 map_arrivals = folium.Map(location=[20, 0], zoom_start=2, tiles='cartodb positron')
 
-df = pd.read_excel('Datasets/UN_Tourism_inbound_arrivals_11_2023.xlsx',
+df = pd.read_excel('../Datasets/UN_Tourism_inbound_arrivals_11_2023.xlsx',
                    sheet_name=' Inbound Tourism-Arrivals',
                    skiprows=2)
 
@@ -28,28 +28,35 @@ df['Country'] = country_list
 
 
 
-df = df[df['Unnamed: 5'] == 'Total arrivals']
-df = df.drop(columns=['Unnamed: 4', 'Unnamed: 5', 'Unnamed: 6', 'Unnamed: 7'])
+df = df[(df['Unnamed: 5'] == 'Total arrivals') | (df['Unnamed: 6'] == 'Overnights visitors (tourists)')]
+df = df.drop(columns=['Unnamed: 4', 'Unnamed: 7'])
 
 # change any '..' values to NaN
 df = df.replace('..', np.nan)
 
-# change some country names to match the geojson file
-df['Country'] = df['Country'].replace({
-    'Czechia': 'Czech Republic',
-    'UNITED STATES OF AMERICA': 'United States of America',
-    'United Kingdom of Great Britain and Northern Ireland': 'United Kingdom',
-    'Republic of Korea': 'South Korea',
-    'Viet Nam': 'Vietnam',
-    'Bolivia (Plurinational State of)': 'Bolivia',
-    'Iran (Islamic Republic of)': 'Iran',
-    'Lao People\'s Democratic Republic': 'Laos',
-    'Macao Special Administrative Region of China': 'Macao',
-    'Venezuela, Bolivarian Republic Of': 'Venezuela',
-})
-
 # change countries from all caps to only first letter capitalized
 df['Country'] = df['Country'].str.title()
+
+# Read country mapping from CSV and apply it
+mapping_df = pd.read_csv('../utils/country_mapping.csv')
+df = df.merge(mapping_df, left_on='Country', right_on='original_name', how='left')
+df['Country'] = df['geojson_name'].combine_first(df['Country'])
+df = df.drop(['original_name', 'geojson_name'], axis=1)
+
+
+# replace nan on totals with overnights values for every year and country
+for year in df.columns[3:]:
+    values = df[year].tolist()
+    for i, value in enumerate(values):
+        if pd.isna(values[i]) and i%2 == 0:
+            values[i] = values[i+1]
+    df[year] = values
+
+df = df[df['Unnamed: 5'] == 'Total arrivals']
+
+df = df.drop(columns=['Unnamed: 5', 'Unnamed: 6'])
+
+df = df.reset_index(drop=True)
 
 # add 2020 arrivals to map Choropleth
 folium.Choropleth(
@@ -63,8 +70,8 @@ folium.Choropleth(
     legend_name='Inbound Arrivals in 2020'
 ).add_to(map_arrivals)
 
-print(df.columns)
-
 print(df)
+
+df.to_excel('df.xlsx', index=False)
 
 map_arrivals.save('map.html')
