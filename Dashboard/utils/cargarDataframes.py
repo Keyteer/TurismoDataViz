@@ -1,4 +1,6 @@
 import pandas as pd
+import numpy as np
+
 pd.set_option("display.max_columns", None)
 pd.set_option("display.max_rows", 100)
 
@@ -27,8 +29,62 @@ def df1(path = "Datasets/P_Data_Extract_From_World_Development_Indicators.xlsx")
 
     return df1_largo
 
+def load_arrivals_df(
+    excel_path='../Datasets/UN_Tourism_inbound_arrivals_11_2023.xlsx',
+    mapping_path='../utils/country_mapping.csv'
+):
+    df = pd.read_excel(
+        excel_path,
+        sheet_name=' Inbound Tourism-Arrivals',
+        skiprows=2
+    )
+    df = df.drop(columns=['C.', 'S.', 'C. & S.', 'Units', 'Notes', 'Series', 'Unnamed: 39'])
+    df = df.drop(range(1339,1346))
+    df = df.rename(columns={'Basic data and indicators': 'Country'})
+
+    # Fill missing country names
+    country = None
+    country_list = df['Country'].tolist()
+    for i, x in enumerate(country_list):
+        if pd.isna(x):
+            country_list[i] = country
+        else:
+            country = x
+    df['Country'] = country_list
+
+    # Filter for arrivals and overnights
+    df = df[(df['Unnamed: 5'] == 'Total arrivals') | (df['Unnamed: 6'] == 'Overnights visitors (tourists)')]
+    df = df.drop(columns=['Unnamed: 4', 'Unnamed: 7'])
+
+    # Replace '..' with NaN
+    df = df.replace('..', np.nan)
+
+    # Title case country names
+    df['Country'] = df['Country'].str.title()
+
+    # Map country names to geojson names
+    mapping_df = pd.read_csv(mapping_path)
+    df = df.merge(mapping_df, left_on='Country', right_on='original_name', how='left')
+    df['Country'] = df['geojson_name'].combine_first(df['Country'])
+    df = df.drop(['original_name', 'geojson_name'], axis=1)
+
+    # Replace NaN in totals with overnights for each year/country
+    for year in df.columns[3:]:
+        values = df[year].tolist()
+        for i, value in enumerate(values):
+            if pd.isna(values[i]) and i % 2 == 0:
+                values[i] = values[i+1]
+        df[year] = values
+
+    df = df[df['Unnamed: 5'] == 'Total arrivals']
+    df = df.drop(columns=['Unnamed: 5', 'Unnamed: 6'])
+    df = df.reset_index(drop=True)
+    return df
+
 if __name__ == "__main__":
     df = df1(path = "../Datasets/P_Data_Extract_From_World_Development_Indicators.xlsx")
     df_chile = df[df["Country Name"] == "Chile"]
     df_gdp_chile = df_chile[df_chile["Series Name"] == "International tourism, receipts (current US$)"]
     print(df_gdp_chile.head())
+    arrivals_df = load_arrivals_df()
+    print(arrivals_df.head())
