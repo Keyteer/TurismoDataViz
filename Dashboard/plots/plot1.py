@@ -4,21 +4,23 @@ import pandas as pd
 '''import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))'''
+from utils.textos_idioma import textos
 
 
 # Evolución de ingresos por turismo vs PIB (Gráfico área apilada / no apilada)
-def generar_plot1(df, pais, apilar=True):
+def generar_plot1(df, Country_Code, apilar=True, idioma="es"):
+    t = textos.get(idioma)
 
 ## CREACIÓN DEL DATAFRAME:
     # Filtrar datos de ingresos por turismo
     df_turismo = df[
         (df["Series Name"] == "International tourism, receipts (current US$)") &
-        (df["Nombre Español"] == pais)
+        (df["Country Code"] == Country_Code)
     ][["Year", "Value"]].rename(columns={"Value": "Turismo"})
     # Filtrar datos de PIB
     df_pib = df[
         (df["Series Name"] == "GDP (current US$)") &
-        (df["Nombre Español"] == pais)
+        (df["Country Code"] == Country_Code)
     ][["Year", "Value"]].rename(columns={"Value": "PIB"})
     # Combinar por año
     df_merge = pd.merge(df_pib, df_turismo, on="Year", how="inner")
@@ -36,7 +38,7 @@ def generar_plot1(df, pais, apilar=True):
         x=df_merge["Year"],
         y=df_merge["Turismo"],
         mode="lines",
-        name="Turismo",
+        name=t["turismo"],
         fill=fill_turismo,
         line=dict(width=0.5),
         stackgroup="one" if apilar else None,
@@ -46,16 +48,21 @@ def generar_plot1(df, pais, apilar=True):
         x=df_merge["Year"],
         y=df_merge["PIB restante"],
         mode="lines",
-        name="PIB restante",
+        name=t["pib_restante"],
         fill=fill_pib,
         line=dict(width=0.5),
         stackgroup="one" if apilar else None,
     ))
-    # Elegir título según si es apilado o no
-    if apilar is True:
-        titulo = f"Aporte del turismo al PIB de {pais} (apilado)"
+    # Elegir nombre del país según el idioma
+    if idioma == "es":
+        nombre_pais =df[df["Country Code"] == Country_Code]["Nombre Español"].iloc[0]
     else:
-        titulo = f"Aporte del turismo al PIB de {pais} (no apilado)"
+        nombre_pais = df[df["Country Code"] == Country_Code]["Country Name"].iloc[0]
+    # Elegir título según si es apilado o no
+    if apilar:
+       titulo = t["grafico_titulo_apilado"].format(pais=nombre_pais)
+    else:
+       titulo = t["grafico_titulo_no_apilado"].format(pais=nombre_pais)
     # Configurar el diseño del gráfico
     fig.update_layout(
         title=titulo,
@@ -71,9 +78,9 @@ if __name__ == "__main__":
     from utils.cargarDataframes import df1
     df = df1(path = "../Datasets/P_Data_Extract_From_World_Development_Indicators.xlsx")
     # Apilado
-    fig1 = generar_plot1(df, "Maldivas", apilar=True)
+    fig1 = generar_plot1(df, "MDV", apilar=True, idioma="es")
     fig1.show()
 
     # No apilado
-    fig2 = generar_plot1(df, "Maldivas", apilar=False)
+    fig2 = generar_plot1(df, "MDV", apilar=False, idioma="en")
     fig2.show()
