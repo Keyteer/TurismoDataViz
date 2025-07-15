@@ -3,6 +3,7 @@ textos = {
         "titulo": "Dashboard: Turismo y PIB",
         "seleccion_pais": "Selecciona un país:",
         "apilar": "¿Apilar gráfico PIB y Turismo?",
+        "check_apilar": " Apilar",
         "ajustes": "⚙ Ajustes",
         "idioma_label": "Selecciona el idioma que prefieres para los países:",
         "cerrar": "Cerrar",
@@ -12,12 +13,14 @@ textos = {
         "eje_y": "PIB (US)",
         "leyenda": "Fuente",
         "turismo": "Turismo",
-        "pib_restante": "PIB restante"
+        "pib_restante": "PIB restante",
+        "titulo_plot2": "Mapa de llegadas turísticas"
     },
     "en": {
         "titulo": "Dashboard: Tourism and GDP",
         "seleccion_pais": "Select a country:",
         "apilar": "Stack GDP and Tourism graph?",
+        "check_apilar": " Stack",
         "ajustes": "⚙ Settings",
         "idioma_label": "Choose your preferred language for countries:",
         "cerrar": "Close",
@@ -27,6 +30,7 @@ textos = {
         "eje_y": "GDP (US)",
         "leyenda": "Source",
         "turismo": "Tourism",
-        "pib_restante": "Remaining GDP"
+        "pib_restante": "Remaining GDP",
+        "titulo_plot2": "Tourist arrivals map"
     }
 }

@@ -65,13 +65,15 @@ def generar_plot1(df, Country_Code, apilar=True, idioma="es"):
        titulo = t["grafico_titulo_no_apilado"].format(pais=nombre_pais)
     # Configurar el diseño del gráfico
     fig.update_layout(
-        title=titulo,
-        xaxis_title="Año",
-        yaxis_title="PIB (US)",
+        xaxis_title=t["eje_x"],
+        yaxis_title=t["eje_y"],
         template="plotly_white",
-        legend_title="Fuente"
+        legend_title=t["leyenda"],
+        # leyenda custom segun t["turismo"] y t["pib_restante"]
+
+
     )
-    return fig
+    return titulo, fig
 
 # Para probarlo directamente:
 if __name__ == "__main__":

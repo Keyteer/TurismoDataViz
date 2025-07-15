@@ -36,8 +36,8 @@ def df1(path = "Datasets/P_Data_Extract_From_World_Development_Indicators.xlsx")
     return df1_largo
 
 def load_arrivals_df(
-    excel_path='../Datasets/UN_Tourism_inbound_arrivals_11_2023.xlsx',
-    mapping_path='../utils/country_mapping.csv'
+    excel_path='Datasets/UN_Tourism_inbound_arrivals_11_2023.xlsx',
+    mapping_path='utils/country_mapping.csv'
 ):
     df = pd.read_excel(
         excel_path,

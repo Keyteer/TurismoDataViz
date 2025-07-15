@@ -1,10 +1,11 @@
 import folium
-'''import os
+import os
 import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))'''
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 def generar_plot2(df, year=2020):
-    world_geo = '../utils/countries.geo.json'
+    #world_geo = '../utils/countries.geo.json'
+    world_geo = 'utils/countries.geo.json'
     map_arrivals = folium.Map(location=[20, 0], zoom_start=2, tiles='cartodb positron')
     folium.Choropleth(
         geo_data=world_geo,
@@ -22,6 +23,5 @@ if __name__ == "__main__":
     from utils.cargarDataframes import load_arrivals_df
     df = load_arrivals_df()
     map_arrivals = generar_plot2(df, year=2020)
-    print(df)
-    df.to_excel('df.xlsx', index=False)
-    map_arrivals.save('map.html')
+    #df.to_excel('df.xlsx', index=False)
+    map_arrivals.save('plot2.html')

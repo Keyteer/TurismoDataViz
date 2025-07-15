@@ -4,12 +4,14 @@
 '''################################################################################################'''
 
 import dash
-from dash import html, dcc
-from dash.dependencies import Input, Output
+from dash import html, dcc, Output, Input
 import dash_bootstrap_components as dbc
+import folium
+import os
 
-from utils.cargarDataframes import df1
+from utils.cargarDataframes import df1, load_arrivals_df
 from plots.plot1 import generar_plot1
+from plots.plot2 import generar_plot2
 from utils.textos_idioma import textos
 
 
@@ -18,6 +20,7 @@ from utils.textos_idioma import textos
 '''################################################################################################'''
 
 df = df1()
+arrivals_df = load_arrivals_df()
 
 
 '''################################################################################################'''
@@ -77,15 +80,56 @@ app.layout = html.Div([
     ),
 
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 1 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
-    html.Label(id="label-apilar"),
-    dcc.Checklist(
-        id="check-apilar",
-        options=[{"label": "Apilar", "value": "apilar"},],
-        value=["apilar"],  # Por defecto true
-        style={"marginBottom": "20px"}
+    html.Div(
+        children=[
+            html.H4(id="titulo-plot1", style={"textAlign": "center"}),
+            dbc.Row(children=[
+                dbc.Col(html.Label(id="label-apilar"), width="auto"),
+                dbc.Col(
+                    dcc.Checklist(
+                        id="check-plot1",
+                        options=[],
+                        value=["apilar"],
+                        inline=True,
+                        style={"marginBottom": "0px"}
+                    ),
+                    width="auto"
+                ),
+            ], className="mb-3", justify="center", style={"textAlign": "center"}),
+
+            dcc.Graph(id="grafico-turismo-pib")
+        ],
+        id="grafico-pib-turismo-container",
+        style={
+            "maxWidth": "900px",
+            "margin": "auto",
+            "padding": "20px"
+        }
     ),
 
-    dcc.Graph(id="grafico-turismo-pib")
+
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 2 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+    html.Div(
+        children=[
+            html.H4(id="titulo-plot2", style={"textAlign": "center"}),
+            html.Iframe(id="mapa-plot2", srcDoc=None, width="100%", height="600px", style={"display": "block"}),
+            html.Label("Selecciona un año:", style={"textAlign": "center", "marginTop": "0px"}),
+            dcc.Slider(
+                id='slider-plot2',
+                min=int(arrivals_df.columns[1]),
+                max=int(arrivals_df.columns[-1]),
+                value=2008,
+                marks={int(a): str(a) for a in arrivals_df.columns[1:]}, # Añade marcas para cada año
+                step=None, # Permite seleccionar solo los años disponibles
+                included=False, # Eliminar rango
+                tooltip={"placement": "bottom", "always_visible": True}, # Tooltip siempre visible
+                updatemode="drag", # Para actualizar al arrastrar
+            ),
+        ],
+        id="plot2",
+        style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
+    )
+
 ])
 
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- CALLBACKS -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
@@ -112,20 +156,26 @@ def toggle_modal(n_abrir, n_cerrar):
     Output("label-idioma", "children"),
     Output("cerrar-modal", "children"),
     Output("dropdown-pais", "options"),
+    Output("check-plot1", "options"),
+    Output("titulo-plot2", "children"),
     Input("radio-idioma", "value")
 )
 def actualizar_textos_y_options(idioma):
     t = textos.get(idioma, textos["es"])
     if idioma == "es":
-        opciones = [
+        opciones_paises = [
             {"label": f"{row['Nombre Español']} ({row['Country Code']})", "value": row["Country Code"]}
             for _, row in df.drop_duplicates(subset="Nombre Español").iterrows()
         ]
     else:
-        opciones = [
+        opciones_paises = [
             {"label": f"{row['Country Name']} ({row['Country Code']})", "value": row["Country Code"]}
             for _, row in df.drop_duplicates(subset="Country Name").iterrows()
         ]
+    check_plot1 = [{
+        "label": t["check_apilar"],
+        "value": "apilar"
+    }]
     return (
         t["titulo"],
         t["seleccion_pais"],
@@ -133,20 +183,34 @@ def actualizar_textos_y_options(idioma):
         t["ajustes"],
         t["idioma_label"],
         t["cerrar"],
-        opciones
+        opciones_paises,
+        check_plot1,
+        t["titulo_plot2"]
     )
 
 # PLOT 1
 @app.callback(
     Output("grafico-turismo-pib", "figure"),
+    Output("titulo-plot1", "children"),
     Input("dropdown-pais", "value"),
     Input("radio-idioma", "value"),
-    Input("check-apilar", "value")
+    Input("check-plot1", "value")
 )
 def actualizar_plot1(pais_codigo, idioma, apilar_valores):
     apilar = "apilar" in apilar_valores
-    return generar_plot1(df, pais_codigo, apilar=apilar, idioma=idioma)
+    titulo, fig = generar_plot1(df, pais_codigo, apilar=apilar, idioma=idioma)
+    return fig, titulo
 
+# PLOT 2
+@app.callback(
+    Output("mapa-plot2", "srcDoc"),
+    Input("slider-plot2", "value")
+)
+def actualizar_mapa(anio):
+    mapa = generar_plot2(arrivals_df, year=anio)
+    mapa.save("plots/temp_map.html")
+    with open("plots/temp_map.html", "r", encoding="utf-8") as f:
+        return f.read()
 
 
 
