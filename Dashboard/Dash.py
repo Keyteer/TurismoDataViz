@@ -18,23 +18,17 @@ from utils.traducirPais import traducir_pais, traducir_pais_inverso
 
 df = df1()
 
-# Obtener lista de países en ingles.
-paises_ingles = df["Country Name"].unique()
-# Obtener lista de paises en español.
-paises_espanol = sorted([traducir_pais(pais) for pais in paises_ingles])
-
 
 '''################################################################################################'''
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ INICIALIZAR APP -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+###
 '''################################################################################################'''
 
-# Inicializar app
 app = dash.Dash(__name__)
 app.title = "Dashboard Turismo y PIB"
 
 
 '''################################################################################################'''
-###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ LAYOUT -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ LAYOUT -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
 '''################################################################################################'''
 
 app.layout = html.Div([
@@ -44,29 +38,32 @@ app.layout = html.Div([
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ PLOT 1 -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
     html.Label("Selecciona un país:"),
     dcc.Dropdown(
-        id="dropdown-pais",
-        options=[{"label": traducir_pais_inverso(p), "value": p}
-                for p in paises_espanol],
-        value="Maldivas"
-    ),
+    id="dropdown-pais",
+    options=[
+        {"label": nombre, "value": nombre}
+        for nombre in sorted(df["Nombre Español"].dropna().unique())
+    ],
+    value="Maldivas",
+    clearable=False
+),
     html.Label("¿Apilar gráfico PIB y Turismo?"),
     dcc.Checklist(
         id="check-apilar",
         options=[{"label": "Apilar", "value": "apilar"},],
-        value=["apilar"],  # Valor por defecto
+        value=["apilar"],  # Por defecto true
         style={"marginBottom": "20px"}
     ),
 
     dcc.Graph(id="grafico-turismo-pib")
 ])
 
-# Callback para actualizar el gráfico
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- CALLBACKS -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
 @app.callback(
     Output("grafico-turismo-pib", "figure"),
     Input("dropdown-pais", "value"),
     Input("check-apilar", "value")
 )
-def actualizar_plot(pais, apilar_valores):
+def actualizar_plot1(pais, apilar_valores):
     apilar = "apilar" in apilar_valores
     return generar_plot1(df, pais, apilar=apilar)
 

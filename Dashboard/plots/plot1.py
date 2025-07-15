@@ -1,10 +1,9 @@
 import plotly.graph_objects as go
 import pandas as pd
-import sys
+
+'''import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from utils.cargarDataframes import df1
-from utils.traducirPais import traducir_pais
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))'''
 
 
 # Evolución de ingresos por turismo vs PIB (Gráfico área apilada / no apilada)
@@ -14,12 +13,12 @@ def generar_plot1(df, pais, apilar=True):
     # Filtrar datos de ingresos por turismo
     df_turismo = df[
         (df["Series Name"] == "International tourism, receipts (current US$)") &
-        (df["Country Name"] == pais)
+        (df["Nombre Español"] == pais)
     ][["Year", "Value"]].rename(columns={"Value": "Turismo"})
     # Filtrar datos de PIB
     df_pib = df[
         (df["Series Name"] == "GDP (current US$)") &
-        (df["Country Name"] == pais)
+        (df["Nombre Español"] == pais)
     ][["Year", "Value"]].rename(columns={"Value": "PIB"})
     # Combinar por año
     df_merge = pd.merge(df_pib, df_turismo, on="Year", how="inner")
@@ -54,9 +53,9 @@ def generar_plot1(df, pais, apilar=True):
     ))
     # Elegir título según si es apilado o no
     if apilar is True:
-        titulo = f"Aporte del turismo al PIB de {traducir_pais(pais)} (apilado)"
+        titulo = f"Aporte del turismo al PIB de {pais} (apilado)"
     else:
-        titulo = f"Aporte del turismo al PIB de {traducir_pais(pais)} (no apilado)"
+        titulo = f"Aporte del turismo al PIB de {pais} (no apilado)"
     # Configurar el diseño del gráfico
     fig.update_layout(
         title=titulo,
@@ -69,11 +68,12 @@ def generar_plot1(df, pais, apilar=True):
 
 # Para probarlo directamente:
 if __name__ == "__main__":
+    from utils.cargarDataframes import df1
     df = df1(path = "../Datasets/P_Data_Extract_From_World_Development_Indicators.xlsx")
     # Apilado
-    fig1 = generar_plot1(df, "Maldives", apilar=True)
+    fig1 = generar_plot1(df, "Maldivas", apilar=True)
     fig1.show()
 
     # No apilado
-    fig2 = generar_plot1(df, "Maldives", apilar=False)
+    fig2 = generar_plot1(df, "Maldivas", apilar=False)
     fig2.show()

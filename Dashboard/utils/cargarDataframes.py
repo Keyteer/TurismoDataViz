@@ -1,7 +1,10 @@
 import pandas as pd
 pd.set_option("display.max_columns", None)
 pd.set_option("display.max_rows", 100)
-
+'''import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))'''
+from utils.traducirPais import traducir_pais
 
 def df1(path = "Datasets/P_Data_Extract_From_World_Development_Indicators.xlsx"):
     # Cargar la hoja principal del Excel
@@ -24,7 +27,10 @@ def df1(path = "Datasets/P_Data_Extract_From_World_Development_Indicators.xlsx")
     df1_largo["Value"] = pd.to_numeric(df1_largo["Value"], errors="coerce")
     # Eliminar filas cuyo valor es NaN
     df1_largo = df1_largo.dropna(subset=["Value"])
-
+    # Agregar traducción
+    df1_largo["Nombre Español"] = df1_largo["Country Name"].apply(traducir_pais)
+    # Ordenar segun nombre en español y año
+    df1_largo = df1_largo.sort_values(by=["Nombre Español", "Year"]).reset_index(drop=True)
     return df1_largo
 
 if __name__ == "__main__":
