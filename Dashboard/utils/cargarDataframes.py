@@ -75,6 +75,7 @@ def load_arrivals_df(
     df = df.drop(['original_name', 'geojson_name'], axis=1)
 
     # Replace NaN in totals with overnights for each year/country
+    df.columns = df.columns.astype(str).str.strip()
     for year in df.columns[3:]:
         values = df[year].tolist()
         for i, value in enumerate(values):
