@@ -1,9 +1,9 @@
 import plotly.graph_objects as go
 import pandas as pd
 
-import sys
+'''import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))'''
 from utils.textos_idioma import textos
 
 
@@ -17,6 +17,13 @@ INDICADORES_DISPONIBLES = {
     "expenditures_travel": "International tourism, expenditures for travel items (current US$)",
     "expenditures_transport": "International tourism, expenditures for passenger transport items (current US$)",
 }
+
+def opciones_dropdown_indicadores(idioma="es"):
+    t = textos.get(idioma)
+    return [
+        {"label": t["indicadores_plot4"][key], "value": key}
+        for key in INDICADORES_DISPONIBLES
+    ]
 
 def generar_plot4(df, id_indicador, rango_anios, idioma="es"):
     t = textos.get(idioma)
@@ -40,7 +47,7 @@ def generar_plot4(df, id_indicador, rango_anios, idioma="es"):
 
 ## CREACIÓN DEL GRÁFICO:
     # Seleccionar umbral
-    umbral = df_ordenado["Value"].max() * 0.2
+    umbral = df_ordenado["Value"].max() * 0.3
     # Generar una lista de colores según umbral
     colores_texto = [
         "white" if v > umbral else "black"
@@ -68,9 +75,8 @@ def generar_plot4(df, id_indicador, rango_anios, idioma="es"):
     # Añadir etiquetas y configuracion del plot
     fig.update_layout(
         xaxis_title=t["eje_x_valor_plot4"],
-        yaxis_title="",
         template="plotly_white",
-        width=300,
+        width=200,
         height=6000,
         margin=dict(l=10, r=10, t=10, b=10), # Ajustar márgenes
         yaxis=dict(autorange="reversed"),  # País con más valor arriba

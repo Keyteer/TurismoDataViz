@@ -6,12 +6,11 @@
 import dash
 from dash import html, dcc, Output, Input
 import dash_bootstrap_components as dbc
-import folium
-import os
 
 from utils.cargarDataframes import df1, load_arrivals_df
 from plots.plot1 import generar_plot1
 from plots.plot2 import generar_plot2
+from plots.plot4 import generar_plot4, opciones_dropdown_indicadores
 from utils.textos_idioma import textos
 
 
@@ -45,7 +44,6 @@ app.layout = html.Div([
             width="auto", style={"textAlign": "right"}
         )
     ], align="center", className="mb-3"),
-
 
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- Modal de Ajustes +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
     dbc.Modal(
@@ -83,6 +81,7 @@ app.layout = html.Div([
     html.Div(
         children=[
             html.H4(id="titulo-plot1", style={"textAlign": "center"}),
+
             dbc.Row(children=[
                 dbc.Col(html.Label(id="label-apilar"), width="auto"),
                 dbc.Col(
@@ -96,9 +95,12 @@ app.layout = html.Div([
                     width="auto"
                 ),
             ], className="mb-3", justify="center", style={"textAlign": "center"}),
+
             dcc.Graph(id="grafico-turismo-pib")
         ],
+
         id="plot1",
+
         style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
     ),
 
@@ -107,7 +109,7 @@ app.layout = html.Div([
     html.Div(
         children=[
             html.H4(id="titulo-plot2", style={"textAlign": "center"}),
-            html.Iframe(id="mapa-plot2", srcDoc=None, width="100%", height="600px", style={"display": "block"}),
+
             dbc.Row(children=[
                 dbc.Col(html.Label(id="label-anio-plot2"), width="auto", style={"textAlign": "left"}),
                 dbc.Col(
@@ -122,18 +124,62 @@ app.layout = html.Div([
                         },
                         step=1,  # Permite seleccionar solo los años disponibles
                         included=False,  # Eliminar rango
-                        tooltip={"placement": "bottom", "always_visible": True},  # Tooltip siempre visible
+                        tooltip={"placement": "bottom", "always_visible": False},
                         updatemode="drag",  # Para actualizar al arrastrar
                     ),
                     width=True, style={"textAlign": "center"}
                 ),
             ], className="mb-3", justify="center", style={"textAlign": "center"}),
-        ],
-        id="plot2",
-        style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
-    )
 
+            html.Iframe(id="mapa-plot2", srcDoc=None, width="100%", height="600px", style={"display": "block"})
+        ],
+
+        id="plot2",
+
+        style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
+    ),
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 4 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+    html.Div(
+        children=[
+            html.H4(id="titulo-plot4", style={"textAlign": "center"}),
+
+            html.Label(id="label-indicador-plot4"),
+
+            dcc.Dropdown(
+                id="dropdown-indicador-plot4",
+                value="arrivals",
+                clearable=False,
+                style={"whiteSpace": "normal"}
+            ),
+
+            html.Label(id="label-rango-anios-plot4"),
+
+            dcc.RangeSlider(
+                id="rango-anios-plot4",
+                min=1995,
+                max=2022,
+                step=1,
+                value=[2015, 2020],
+                marks={
+                    year: str(year) if (year - 1995) % 5 == 0 else ""
+                    for year in range(1995, 2023)
+                },
+                tooltip={"placement": "bottom", "always_visible": False},
+                updatemode="drag",  # Para actualizar al arrastrar
+            ),
+
+            dcc.Graph(id="grafico-plot4", style={"height": "300px", "width": "210px",
+                                                 "overflowY": "scroll", "justify": "center"})
+        ],
+
+        id="plot4",
+
+        style={"maxWidth": "210px", "margin": "auto", "padding": "20px"}
+    )
 ])
+
+
+
 
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- CALLBACKS -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
 # BOTON AJUSTES
@@ -218,6 +264,27 @@ def actualizar_mapa(anio):
     with open("plots/plot2.html", "r", encoding="utf-8") as f:
         return f.read()
 
+# PLOT 4
+@app.callback(
+    Output("grafico-plot4", "figure"),
+    Output("titulo-plot4", "children"),
+    Output("dropdown-indicador-plot4", "options"),
+    Output("label-indicador-plot4", "children"),
+    Output("label-rango-anios-plot4", "children"),
+    Input("dropdown-indicador-plot4", "value"),
+    Input("rango-anios-plot4", "value"),
+    Input("radio-idioma", "value")
+)
+def actualizar_plot4(id_indicador, rango_anios, idioma):
+    fig = generar_plot4(df, id_indicador, rango_anios, idioma)
+    t = textos[idioma]
+    return (
+        fig,
+        t["titulo_plot4"].format(indicador=t["indicadores_plot4"][id_indicador]),
+        opciones_dropdown_indicadores(idioma),
+        t["label_indicador_plot4"],
+        t["label_rango_anios_plot4"]
+    )
 
 
 
