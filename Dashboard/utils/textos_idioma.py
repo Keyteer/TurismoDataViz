@@ -17,7 +17,19 @@ textos = {
         "titulo_plot2": "Mapa de llegadas turísticas",
         "label_anio_plot2": "Selecciona un año:",
         "eje_x_valor_plot4": "Valor",
-        "eje_y_pais_plot4": "País"
+        "eje_y_pais_plot4": "País",
+        "indicadores_plot4": {
+            "arrivals": "Llegadas internacionales",
+            "departures": "Salidas internacionales",
+            "receipts_total": "Ingresos totales por turismo (US$)",
+            "receipts_travel": "Ingresos por actividades del viaje (US$)",
+            "receipts_transport": "Ingresos por transporte de pasajeros (US$)",
+            "expenditures_total": "Gastos totales por turismo (US$)",
+            "expenditures_travel": "Gastos en actividades del viaje (US$)",
+            "expenditures_transport": "Gastos en transporte de pasajeros (US$)",
+            "receipts_exports": "Ingresos por turismo (% exportaciones)",
+            "expenditures_imports": "Gastos por turismo (% importaciones)"
+        }
 
     },
     "en": {
@@ -38,6 +50,18 @@ textos = {
         "titulo_plot2": "Tourist arrivals map",
         "label_anio_plot2": "Select a year:",
         "eje_x_valor_plot4": "Value",
-        "eje_y_pais_plot4": "Country"
+        "eje_y_pais_plot4": "Country",
+        "indicadores_plot4": {
+            "arrivals": "International arrivals",
+            "departures": "International departures",
+            "receipts_total": "Total tourism receipts (US$)",
+            "receipts_travel": "Travel items receipts (US$)",
+            "receipts_transport": "Passenger transport receipts (US$)",
+            "expenditures_total": "Total tourism expenditures (US$)",
+            "expenditures_travel": "Travel items expenditures (US$)",
+            "expenditures_transport": "Passenger transport expenditures (US$)",
+            "receipts_exports": "Tourism receipts (% exports)",
+            "expenditures_imports": "Tourism expenditures (% imports)"
+        }
     }
 }
