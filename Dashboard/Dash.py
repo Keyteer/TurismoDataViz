@@ -214,8 +214,8 @@ def actualizar_plot1(pais_codigo, idioma, apilar_valores):
 )
 def actualizar_mapa(anio):
     mapa = generar_plot2(arrivals_df, year=anio)
-    mapa.save("plots/temp_map.html")
-    with open("plots/temp_map.html", "r", encoding="utf-8") as f:
+    mapa.save("plots/plot2.html")
+    with open("plots/plot2.html", "r", encoding="utf-8") as f:
         return f.read()
 
 

@@ -15,7 +15,10 @@ textos = {
         "turismo": "Turismo",
         "pib_restante": "PIB restante",
         "titulo_plot2": "Mapa de llegadas turísticas",
-        "label_anio_plot2": "Selecciona un año:"
+        "label_anio_plot2": "Selecciona un año:",
+        "eje_x_valor_plot4": "Valor",
+        "eje_y_pais_plot4": "País"
+
     },
     "en": {
         "titulo": "Dashboard: Tourism and GDP",
@@ -33,6 +36,8 @@ textos = {
         "turismo": "Tourism",
         "pib_restante": "Remaining GDP",
         "titulo_plot2": "Tourist arrivals map",
-        "label_anio_plot2": "Select a year:"
+        "label_anio_plot2": "Select a year:",
+        "eje_x_valor_plot4": "Value",
+        "eje_y_pais_plot4": "Country"
     }
 }
