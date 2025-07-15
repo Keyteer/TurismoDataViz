@@ -96,15 +96,10 @@ app.layout = html.Div([
                     width="auto"
                 ),
             ], className="mb-3", justify="center", style={"textAlign": "center"}),
-
             dcc.Graph(id="grafico-turismo-pib")
         ],
-        id="grafico-pib-turismo-container",
-        style={
-            "maxWidth": "900px",
-            "margin": "auto",
-            "padding": "20px"
-        }
+        id="plot1",
+        style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
     ),
 
 
@@ -113,18 +108,26 @@ app.layout = html.Div([
         children=[
             html.H4(id="titulo-plot2", style={"textAlign": "center"}),
             html.Iframe(id="mapa-plot2", srcDoc=None, width="100%", height="600px", style={"display": "block"}),
-            html.Label("Selecciona un año:", style={"textAlign": "center", "marginTop": "0px"}),
-            dcc.Slider(
-                id='slider-plot2',
-                min=int(arrivals_df.columns[1]),
-                max=int(arrivals_df.columns[-1]),
-                value=2008,
-                marks={int(a): str(a) for a in arrivals_df.columns[1:]}, # Añade marcas para cada año
-                step=None, # Permite seleccionar solo los años disponibles
-                included=False, # Eliminar rango
-                tooltip={"placement": "bottom", "always_visible": True}, # Tooltip siempre visible
-                updatemode="drag", # Para actualizar al arrastrar
-            ),
+            dbc.Row(children=[
+                dbc.Col(html.Label(id="label-anio-plot2"), width="auto", style={"textAlign": "left"}),
+                dbc.Col(
+                    dcc.Slider(
+                        id='slider-plot2',
+                        min=int(arrivals_df.columns[1]),
+                        max=int(arrivals_df.columns[-1]),
+                        value=2008,
+                        marks={
+                            int(a): str(a) if i % 3 == 0 else "" # Mostrar cada 3 años
+                            for i, a in enumerate(arrivals_df.columns[1:])
+                        },
+                        step=1,  # Permite seleccionar solo los años disponibles
+                        included=False,  # Eliminar rango
+                        tooltip={"placement": "bottom", "always_visible": True},  # Tooltip siempre visible
+                        updatemode="drag",  # Para actualizar al arrastrar
+                    ),
+                    width=True, style={"textAlign": "center"}
+                ),
+            ], className="mb-3", justify="center", style={"textAlign": "center"}),
         ],
         id="plot2",
         style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
@@ -158,6 +161,7 @@ def toggle_modal(n_abrir, n_cerrar):
     Output("dropdown-pais", "options"),
     Output("check-plot1", "options"),
     Output("titulo-plot2", "children"),
+    Output("label-anio-plot2", "children"),
     Input("radio-idioma", "value")
 )
 def actualizar_textos_y_options(idioma):
@@ -185,7 +189,9 @@ def actualizar_textos_y_options(idioma):
         t["cerrar"],
         opciones_paises,
         check_plot1,
-        t["titulo_plot2"]
+        t["titulo_plot2"],
+        t["label_anio_plot2"]
+
     )
 
 # PLOT 1

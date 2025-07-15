@@ -1,7 +1,8 @@
 import folium
-import os
+
+'''import os
 import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))'''
 
 def generar_plot2(df, year=2020):
     #world_geo = '../utils/countries.geo.json'

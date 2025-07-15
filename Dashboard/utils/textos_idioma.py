@@ -14,7 +14,8 @@ textos = {
         "leyenda": "Fuente",
         "turismo": "Turismo",
         "pib_restante": "PIB restante",
-        "titulo_plot2": "Mapa de llegadas turísticas"
+        "titulo_plot2": "Mapa de llegadas turísticas",
+        "label_anio_plot2": "Selecciona un año:"
     },
     "en": {
         "titulo": "Dashboard: Tourism and GDP",
@@ -31,6 +32,7 @@ textos = {
         "leyenda": "Source",
         "turismo": "Tourism",
         "pib_restante": "Remaining GDP",
-        "titulo_plot2": "Tourist arrivals map"
+        "titulo_plot2": "Tourist arrivals map",
+        "label_anio_plot2": "Select a year:"
     }
 }

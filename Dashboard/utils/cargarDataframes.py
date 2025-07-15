@@ -62,8 +62,8 @@ def load_arrivals_df(
     df = df[(df['Unnamed: 5'] == 'Total arrivals') | (df['Unnamed: 6'] == 'Overnights visitors (tourists)')]
     df = df.drop(columns=['Unnamed: 4', 'Unnamed: 7'])
 
-    # Replace '..' with NaN
-    df = df.replace('..', np.nan)
+
+    df = df.replace('..', np.nan).infer_objects(copy=False)
 
     # Title case country names
     df['Country'] = df['Country'].str.title()
