@@ -280,7 +280,7 @@ def actualizar_plot4(id_indicador, rango_anios, idioma):
     t = textos[idioma]
     return (
         fig,
-        t["titulo_plot4"].format(indicador=t["indicadores_plot4"][id_indicador]),
+        t["titulo_plot4"].format(indicador=t["indicadores_df1"][id_indicador]),
         opciones_dropdown_indicadores(idioma),
         t["label_indicador_plot4"],
         t["label_rango_anios_plot4"]
