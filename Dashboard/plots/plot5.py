@@ -1,12 +1,11 @@
 import plotly.express as px
 import pandas as pd
 
-
-import sys
+'''import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))'''
 from utils.textos_idioma import textos
+
 
 INDICADORES_DISPONIBLES = {
     "arrivals": "International tourism, number of arrivals",

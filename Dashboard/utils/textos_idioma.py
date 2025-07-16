@@ -48,8 +48,8 @@ textos = {
         "label_indicador_x_plot5": "Indicador en eje X",
         "label_indicador_y_plot5": "Indicador en eje Y",
         "label_rango_anios_plot5": "Rango de años",
-        "label_filtrar_top3_plot5": "Filtrar top 3"
-
+        "label_filtrar_top3_plot5": "Filtrar top 3",
+"mensaje_indicadores_iguales": "No se puede seleccionar el mismo indicador en ambos ejes. Se ha ajustado automáticamente.",
     },
     "en": {
     # Para el dashboard
@@ -100,7 +100,8 @@ textos = {
         "label_indicador_x_plot5": "Indicator for X axis",
         "label_indicador_y_plot5": "Indicator for Y axis",
         "label_rango_anios_plot5": "Range of years",
-        "label_filtrar_top3_plot5": "Filter top 3"
+        "label_filtrar_top3_plot5": "Filter top 3",
+        "mensaje_indicadores_iguales": "You cannot select the same indicator on both axes. It has been adjusted automatically.",
 
     }
 }

@@ -207,7 +207,7 @@ app.layout = html.Div([
             html.Label(id="label-indicador-x-plot5"),
             dcc.Dropdown(
                 id="dropdown-indicador-x-plot5",
-                value="arrivals",  # valor inicial
+                value="GDP",
                 clearable=False,
                 style={"whiteSpace": "normal"}
             ),
@@ -215,10 +215,11 @@ app.layout = html.Div([
             html.Label(id="label-indicador-y-plot5"),
             dcc.Dropdown(
                 id="dropdown-indicador-y-plot5",
-                value="receipts_total",
+                value="receipts_exports",
                 clearable=False,
                 style={"whiteSpace": "normal"}
             ),
+            html.Div(id="plot5-aviso-repetido"),
 
             html.Label(id="label-rango-anios-plot5"),
             dcc.RangeSlider(
@@ -391,6 +392,7 @@ def actualizar_plot6(id_indicador, rango_anios, idioma):
     Output("label-indicador-y-plot5", "children"),
     Output("label-rango-anios-plot5", "children"),
     Output("label-filtrar-top3-plot5", "children"),
+    Output("plot5-aviso-repetido", "children"),
     Input("dropdown-indicador-x-plot5", "value"),
     Input("dropdown-indicador-y-plot5", "value"),
     Input("rango-anios-plot5", "value"),
@@ -401,15 +403,33 @@ def actualizar_plot5(id_indicador_x, id_indicador_y, rango_anios, idioma, filtra
     t = textos.get(idioma, textos["es"])
     opciones = plot5_indicadores(idioma)
     valores_validos = [opt["value"] for opt in opciones]
-    if id_indicador_x not in valores_validos:
+    # Defaults por primera carga (solo si son None)
+    if id_indicador_x is None:
+        id_indicador_x = "GDP"
+    if id_indicador_y is None:
+        id_indicador_y = "receipts_exports"
+    # Validar ambos indicadores
+    if id_indicador_x not in valores_validos or id_indicador_x is None:
         id_indicador_x = valores_validos[0]
-    if id_indicador_y not in valores_validos:
-        id_indicador_y = valores_validos[1]
+    if id_indicador_y not in valores_validos or id_indicador_y is None:
+        # Elige otro valor diferente de X
+        id_indicador_y = next(val for val in valores_validos if val != id_indicador_x)
+    # Evitar que sean iguales
+    mensaje = None
+    if id_indicador_x == id_indicador_y:
+        id_indicador_y = next(val for val in valores_validos if val != id_indicador_x)
+        mensaje = html.Div(
+            t["mensaje_indicadores_iguales"],
+            style={"color": "red", "fontWeight": "bold", "marginTop": "1px", "textAlign": "center"}
+        )
+    #Generar fig
     filter_top = 3 if "filtrar" in filtrar_top3 else 0
     fig = generar_plot5(df, id_indicador_x, id_indicador_y, rango_anios, idioma, filter_top=filter_top)
-    label_x = t["indicadores_df1"].get(id_indicador_x, id_indicador_x)
-    label_y = t["indicadores_df1"].get(id_indicador_y, id_indicador_y)
-    titulo = t["titulo_plot5"].format(indicador_x=label_x, indicador_y=label_y)
+    titulo = t["titulo_plot5"].format(
+        indicador_x=t["indicadores_df1"][id_indicador_x],
+        indicador_y=t["indicadores_df1"][id_indicador_y]
+    )
+
     return (
         fig,
         titulo,
@@ -418,7 +438,8 @@ def actualizar_plot5(id_indicador_x, id_indicador_y, rango_anios, idioma, filtra
         t["label_indicador_x_plot5"],
         t["label_indicador_y_plot5"],
         t["label_rango_anios_plot5"],
-        t["label_filtrar_top3_plot5"]
+        t["label_filtrar_top3_plot5"],
+        mensaje
     )
 
 
