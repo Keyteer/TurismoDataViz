@@ -21,7 +21,7 @@ INDICADORES_DISPONIBLES = {
 def opciones_dropdown_indicadores(idioma="es"):
     t = textos.get(idioma)
     return [
-        {"label": t["indicadores_plot4"][key], "value": key}
+        {"label": t["indicadores_df1"][key], "value": key}
         for key in INDICADORES_DISPONIBLES
     ]
 
