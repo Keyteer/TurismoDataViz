@@ -234,18 +234,21 @@ app.layout = html.Div([
             ),
 
             dbc.Row(children=[
-                dbc.Col(html.Label(id="label-filtrar-top3-plot5"), width="auto"),
+                dbc.Col(html.Label(id="label-filtrar-topn-plot5"), width="auto"),
                 dbc.Col(
-                    dcc.Checklist(
-                        id="check-filtrar-top3-plot5",
-                        options=[{"label": "Filtrar top 3", "value": "filtrar"}],
-                        value=[],
-                        inline=True,
-                        style={"marginBottom": "0px"}
+                    dcc.Input(
+                        id="input-filtrar-topn-plot5",
+                        type="number",
+                        min=0,
+                        max=100,
+                        step=1,
+                        value=0,
+                        style={"width": "80px", "textAlign": "center"}
                     ),
                     width="auto"
                 ),
-            ], className="mb-3", justify="center", style={"textAlign": "center"}),
+            ], className="mb-3", justify="center", style={"textAlign": "center"})
+            ,
 
             dcc.Graph(
                 id="grafico-plot5",
@@ -391,15 +394,15 @@ def actualizar_plot6(id_indicador, rango_anios, idioma):
     Output("label-indicador-x-plot5", "children"),
     Output("label-indicador-y-plot5", "children"),
     Output("label-rango-anios-plot5", "children"),
-    Output("label-filtrar-top3-plot5", "children"),
+    Output("label-filtrar-topn-plot5", "children"),
     Output("plot5-aviso-repetido", "children"),
     Input("dropdown-indicador-x-plot5", "value"),
     Input("dropdown-indicador-y-plot5", "value"),
     Input("rango-anios-plot5", "value"),
     Input("radio-idioma", "value"),
-    Input("check-filtrar-top3-plot5", "value")
+    Input("input-filtrar-topn-plot5", "value")
 )
-def actualizar_plot5(id_indicador_x, id_indicador_y, rango_anios, idioma, filtrar_top3):
+def actualizar_plot5(id_indicador_x, id_indicador_y, rango_anios, idioma, n):
     t = textos.get(idioma, textos["es"])
     opciones = plot5_indicadores(idioma)
     valores_validos = [opt["value"] for opt in opciones]
@@ -423,7 +426,7 @@ def actualizar_plot5(id_indicador_x, id_indicador_y, rango_anios, idioma, filtra
             style={"color": "red", "fontWeight": "bold", "marginTop": "1px", "textAlign": "center"}
         )
     #Generar fig
-    filter_top = 3 if "filtrar" in filtrar_top3 else 0
+    filter_top = max(0, min(n if n is not None else 0, 50))
     fig = generar_plot5(df, id_indicador_x, id_indicador_y, rango_anios, idioma, filter_top=filter_top)
     titulo = t["titulo_plot5"].format(
         indicador_x=t["indicadores_df1"][id_indicador_x],
