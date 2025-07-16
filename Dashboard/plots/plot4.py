@@ -18,7 +18,7 @@ INDICADORES_DISPONIBLES = {
     "expenditures_transport": "International tourism, expenditures for passenger transport items (current US$)",
 }
 
-def opciones_dropdown_indicadores(idioma="es"):
+def plot4_indicadores(idioma="es"):
     t = textos.get(idioma)
     return [
         {"label": t["indicadores_df1"][key], "value": key}

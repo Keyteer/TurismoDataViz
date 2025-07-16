@@ -10,8 +10,9 @@ import dash_bootstrap_components as dbc
 from utils.cargarDataframes import df1, load_arrivals_df
 from plots.plot1 import generar_plot1
 from plots.plot2 import generar_plot2
-from plots.plot4 import generar_plot4, opciones_dropdown_indicadores
-from plots.plot5 import generar_plot5
+from plots.plot4 import generar_plot4, plot4_indicadores
+from plots.plot5 import generar_plot5, plot5_indicadores
+from plots.plot6 import generar_plot6, plot6_indicadores
 from utils.textos_idioma import textos
 
 
@@ -34,21 +35,6 @@ app.title = "Dashboard Turismo y PIB"
 '''################################################################################################'''
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ LAYOUT -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
 '''################################################################################################'''
-
-# --- INDICADORES DISPONIBLES PARA PLOT 5 ---
-INDICADORES_PLOT5 = {
-    "arrivals": "Llegadas internacionales",
-    "departures": "Salidas internacionales",
-    "receipts_total": "Ingresos totales por turismo (US$)",
-    "receipts_travel": "Ingresos por actividades del viaje (US$)",
-    "receipts_transport": "Ingresos por transporte de pasajeros (US$)",
-    "expenditures_total": "Gastos totales por turismo (US$)",
-    "expenditures_travel": "Gastos en actividades del viaje (US$)",
-    "expenditures_transport": "Gastos en transporte de pasajeros (US$)",
-    "receipts_exports": "Ingresos por turismo (% exportaciones)",
-    "expenditures_imports": "Gastos por turismo (% importaciones)"
-}
-
 app.layout = html.Div([
 
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- Título y Botón Ajustes Dashboard +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
@@ -119,7 +105,6 @@ app.layout = html.Div([
         style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
     ),
 
-
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 2 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
     html.Div(
         children=[
@@ -153,46 +138,68 @@ app.layout = html.Div([
 
         style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
     ),
-###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 4 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 4 y 6  -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+###
     html.Div(
+        id="plot4-6-container",
+        style={"margin": "auto", "padding": "10px", "width": "490px", "height": "450px"},
         children=[
-            html.H4(id="titulo-plot4", style={"textAlign": "center"}),
+            dbc.Row([
+                # TITULOS
+                dbc.Col(html.H4(id="titulo-plot6", style={"textAlign": "center"}), width=6),
+                dbc.Col(html.H4(id="titulo-plot4", style={"textAlign": "center"}), width=6),
+            ], className="mb-2"),
 
-            html.Label(id="label-indicador-plot4"),
+            dbc.Row([
+                # DROPDOWNS
+                dbc.Col(
+                    dcc.Dropdown(
+                        id="dropdown-indicador-plot6",
+                        value="receipts_exports",
+                        clearable=False,
+                        style={"whiteSpace": "normal"}
+                    ), width=6
+                ),
+                dbc.Col(
+                    dcc.Dropdown(
+                        id="dropdown-indicador-plot4",
+                        value="arrivals",
+                        clearable=False,
+                        style={"whiteSpace": "normal"}
+                    ), width=6
+                ),
+            ], className="mb-3"),
 
-            dcc.Dropdown(
-                id="dropdown-indicador-plot4",
-                value="arrivals",
-                clearable=False,
-                style={"whiteSpace": "normal"}
-            ),
+            dbc.Row([
+                # TABLA PLOT 6 + GRAFICO PLOT 4
+                dbc.Col(html.Div(id="tabla-plot6", style={
+                    "height": "250px", "overflowY": "auto"
+                }), width=6),
 
-            html.Label(id="label-rango-anios-plot4"),
+                dbc.Col(dcc.Graph(id="grafico-plot4", style={
+                    "height": "250px", "overflowY": "auto", "justify": "center"
+                }), width=6),
+            ], className="mb-4"),
 
-            dcc.RangeSlider(
-                id="rango-anios-plot4",
-                min=1995,
-                max=2022,
-                step=1,
-                value=[2015, 2020],
-                marks={
-                    year: str(year) if (year - 1995) % 5 == 0 else ""
-                    for year in range(1995, 2023)
-                },
-                tooltip={"placement": "bottom", "always_visible": False},
-                updatemode="drag",  # Para actualizar al arrastrar
-            ),
-
-            dcc.Graph(id="grafico-plot4", style={"height": "300px", "width": "210px",
-                                                 "overflowY": "scroll", "justify": "center"})
-        ],
-
-        id="plot4",
-
-        style={"maxWidth": "210px", "margin": "auto", "padding": "20px"}
+            dbc.Row([
+                dbc.Col([
+                    html.Label(id="label-rango-anios-plot4"),
+                    dcc.RangeSlider(
+                        id="rango-anios-plot4",
+                        min=1995,
+                        max=2022,
+                        step=1,
+                        value=[2015, 2020],
+                        marks={year: str(year) if (year - 1995) % 5 == 0 else "" for year in range(1995, 2023)},
+                        tooltip={"placement": "bottom", "always_visible": False},
+                        updatemode="drag"
+                    )
+                ], width=12)
+            ])
+        ]
     ),
 
-    ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 5 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 5 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
     html.Div(
         children=[
             html.H4(id="titulo-plot5", style={"textAlign": "center"}),
@@ -200,8 +207,7 @@ app.layout = html.Div([
             html.Label(id="label-indicador-x-plot5"),
             dcc.Dropdown(
                 id="dropdown-indicador-x-plot5",
-                options=[{"label": v, "value": k} for k, v in INDICADORES_PLOT5.items()],
-                value="arrivals",
+                value="arrivals",  # valor inicial
                 clearable=False,
                 style={"whiteSpace": "normal"}
             ),
@@ -209,7 +215,6 @@ app.layout = html.Div([
             html.Label(id="label-indicador-y-plot5"),
             dcc.Dropdown(
                 id="dropdown-indicador-y-plot5",
-                options=[{"label": v, "value": k} for k, v in INDICADORES_PLOT5.items()],
                 value="receipts_total",
                 clearable=False,
                 style={"whiteSpace": "normal"}
@@ -222,10 +227,7 @@ app.layout = html.Div([
                 max=2022,
                 step=1,
                 value=[2015, 2020],
-                marks={
-                    year: str(year) if (year - 1995) % 5 == 0 else ""
-                    for year in range(1995, 2023)
-                },
+                marks={year: str(year) if (year - 1995) % 5 == 0 else "" for year in range(1995, 2023)},
                 tooltip={"placement": "bottom", "always_visible": False},
                 updatemode="drag",
             ),
@@ -244,14 +246,17 @@ app.layout = html.Div([
                 ),
             ], className="mb-3", justify="center", style={"textAlign": "center"}),
 
-            dcc.Graph(id="grafico-plot5", style={"height": "600px", "width": "600px",
-                                                 "overflowY": "scroll", "justify": "center"})
+            dcc.Graph(
+                id="grafico-plot5",
+                style={"height": "600px", "width": "600px", "overflowY": "scroll", "justify": "center"}
+            )
         ],
 
         id="plot5",
 
         style={"maxWidth": "650px", "margin": "auto", "padding": "20px"}
     )
+
 ])
 
 
@@ -345,8 +350,6 @@ def actualizar_mapa(anio):
     Output("grafico-plot4", "figure"),
     Output("titulo-plot4", "children"),
     Output("dropdown-indicador-plot4", "options"),
-    Output("label-indicador-plot4", "children"),
-    Output("label-rango-anios-plot4", "children"),
     Input("dropdown-indicador-plot4", "value"),
     Input("rango-anios-plot4", "value"),
     Input("radio-idioma", "value")
@@ -357,9 +360,25 @@ def actualizar_plot4(id_indicador, rango_anios, idioma):
     return (
         fig,
         t["titulo_plot4"].format(indicador=t["indicadores_df1"][id_indicador]),
-        opciones_dropdown_indicadores(idioma),
-        t["label_indicador_plot4"],
-        t["label_rango_anios_plot4"]
+        plot4_indicadores(idioma)
+    )
+
+# PLOT 6
+@app.callback(
+    Output("tabla-plot6", "children"),
+    Output("titulo-plot6", "children"),
+    Output("dropdown-indicador-plot6", "options"),
+    Input("dropdown-indicador-plot6", "value"),
+    Input("rango-anios-plot4", "value"),
+    Input("radio-idioma", "value")
+)
+def actualizar_plot6(id_indicador, rango_anios, idioma):
+    t = textos[idioma]
+    tabla = generar_plot6(df, id_indicador, rango_anios, idioma)
+    return (
+        tabla,
+        t["titulo_plot6"].format(indicador=t["indicadores_df1"][id_indicador]),
+        plot6_indicadores(idioma)
     )
 
 # PLOT 5
@@ -380,26 +399,26 @@ def actualizar_plot4(id_indicador, rango_anios, idioma):
 )
 def actualizar_plot5(id_indicador_x, id_indicador_y, rango_anios, idioma, filtrar_top3):
     t = textos.get(idioma, textos["es"])
-    opciones = [{"label": v, "value": k} for k, v in INDICADORES_PLOT5.items()]
-    # Fallbacks to avoid None/KeyError
-    if id_indicador_x not in INDICADORES_PLOT5:
-        id_indicador_x = list(INDICADORES_PLOT5.keys())[0]
-    if id_indicador_y not in INDICADORES_PLOT5:
-        id_indicador_y = list(INDICADORES_PLOT5.keys())[1]
+    opciones = plot5_indicadores(idioma)
+    valores_validos = [opt["value"] for opt in opciones]
+    if id_indicador_x not in valores_validos:
+        id_indicador_x = valores_validos[0]
+    if id_indicador_y not in valores_validos:
+        id_indicador_y = valores_validos[1]
     filter_top = 3 if "filtrar" in filtrar_top3 else 0
     fig = generar_plot5(df, id_indicador_x, id_indicador_y, rango_anios, idioma, filter_top=filter_top)
-    label_x = INDICADORES_PLOT5.get(id_indicador_x, id_indicador_x)
-    label_y = INDICADORES_PLOT5.get(id_indicador_y, id_indicador_y)
-    titulo = f"{label_x} vs {label_y}"
+    label_x = t["indicadores_df1"].get(id_indicador_x, id_indicador_x)
+    label_y = t["indicadores_df1"].get(id_indicador_y, id_indicador_y)
+    titulo = t["titulo_plot5"].format(indicador_x=label_x, indicador_y=label_y)
     return (
         fig,
         titulo,
         opciones,
         opciones,
-        "Indicador X",
-        "Indicador Y",
-        "Rango de años",
-        "Filtrar top 3"
+        t["label_indicador_x_plot5"],
+        t["label_indicador_y_plot5"],
+        t["label_rango_anios_plot5"],
+        t["label_filtrar_top3_plot5"]
     )
 
 

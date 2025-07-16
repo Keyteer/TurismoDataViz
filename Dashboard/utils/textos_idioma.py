@@ -34,13 +34,20 @@ textos = {
         "titulo_plot2": "Mapa de llegadas turísticas",
         "label_anio_plot2": "Selecciona un año:",
     # PLOT 4
-        "titulo_plot4": "Ranking global: {indicador}",
+        "titulo_plot4": "Ranking Global por datos absloutos",
         "label_indicador_plot4": "Indicador:",
         "label_rango_anios_plot4": "Rango de años:",
         "eje_x_valor_plot4": "Valor",
         "eje_y_pais_plot4": "País",
     # PLOT 6
-
+        "titulo_plot6": "Ranking Global por datos relativos",
+        "label_indicador_plot6": "Indicador",
+    #PLOT 5
+        "titulo_plot5": "{indicador_x} vs {indicador_y}",
+        "label_indicador_x_plot5": "Indicador en eje X",
+        "label_indicador_y_plot5": "Indicador en eje Y",
+        "label_rango_anios_plot5": "Rango de años",
+        "label_filtrar_top3_plot5": "Filtrar top 3"
 
     },
     "en": {
@@ -84,6 +91,14 @@ textos = {
         "eje_x_valor_plot4": "Value",
         "eje_y_pais_plot4": "Country",
     # PLOT 6
+        "titulo_plot6": "Ranking of countries by",
+        "label_indicador_plot6": "Select a relative indicator",
+    #PLOT 5
+        "titulo_plot5": "{indicador_x} vs {indicador_y}",
+        "label_indicador_x_plot5": "Indicator for X axis",
+        "label_indicador_y_plot5": "Indicator for Y axis",
+        "label_rango_anios_plot5": "Range of years",
+        "label_filtrar_top3_plot5": "Filter top 3"
 
     }
 }

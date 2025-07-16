@@ -12,14 +12,14 @@ INDICADORES_DISPONIBLES = {
     "expenditures_imports": "International tourism, expenditures (% of total imports)"
 }
 
-def opciones_dropdown_indicadores(idioma="es"):
+def plot6_indicadores(idioma="es"):
     t = textos.get(idioma)
     return [
         {"label": t["indicadores_df1"][key], "value": key}
         for key in INDICADORES_DISPONIBLES
     ]
 
-def generar_plot4(df, id_indicador, rango_anios, idioma="es"):
+def generar_plot6(df, id_indicador, rango_anios, idioma="es"):
     indicador = INDICADORES_DISPONIBLES[id_indicador]
 
     ## CREACIÓN DEL DATAFRAME:

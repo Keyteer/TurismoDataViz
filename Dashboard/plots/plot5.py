@@ -19,6 +19,13 @@ INDICADORES_DISPONIBLES = {
     "expenditures_transport": "International tourism, expenditures for passenger transport items (current US$)",
 }
 
+def plot5_indicadores(idioma="es"):
+    t = textos.get(idioma)
+    return [
+        {"label": t["indicadores_df1"][key], "value": key}
+        for key in INDICADORES_DISPONIBLES
+    ]
+
 def generar_plot5(df, id_indicador_x, id_indicador_y, rango_anios, idioma="es", filter_top=0):
     t = textos.get(idioma)
     indicador_x = INDICADORES_DISPONIBLES[id_indicador_x]
