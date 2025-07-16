@@ -33,7 +33,7 @@ def generar_plot4(df, id_indicador, rango_anios, idioma="es"):
     # Filtrar por indicador e intervalo de años
     df_filtrado = df[(df["Series Name"] == indicador) &
         (df["Year"] >= rango_anios[0]) & (df["Year"] <= rango_anios[1])]
-    # Agrupar por país y calcular promedio
+    # Agrupar por país y calcular suma total
     df_agrupado = df_filtrado.groupby(
         ["Country Name", "Nombre Español"], as_index=False
     )["Value"].sum()

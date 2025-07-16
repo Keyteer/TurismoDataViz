@@ -38,7 +38,9 @@ textos = {
         "label_indicador_plot4": "Indicador:",
         "label_rango_anios_plot4": "Rango de años:",
         "eje_x_valor_plot4": "Valor",
-        "eje_y_pais_plot4": "País"
+        "eje_y_pais_plot4": "País",
+    # PLOT 6
+
 
     },
     "en": {
@@ -80,7 +82,8 @@ textos = {
         "label_indicador_plot4": "Ondicator:",
         "label_rango_anios_plot4": "Range of years:",
         "eje_x_valor_plot4": "Value",
-        "eje_y_pais_plot4": "Country"
+        "eje_y_pais_plot4": "Country",
+    # PLOT 6
 
     }
 }
