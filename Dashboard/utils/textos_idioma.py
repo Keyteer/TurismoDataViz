@@ -18,7 +18,8 @@ textos = {
             "expenditures_travel": "Gastos en actividades del viaje (US$)",
             "expenditures_transport": "Gastos en transporte de pasajeros (US$)",
             "receipts_exports": "Ingresos por turismo (% exportaciones)",
-            "expenditures_imports": "Gastos por turismo (% importaciones)"
+            "expenditures_imports": "Gastos por turismo (% importaciones)",
+            "GDP": "PIB (US$)"
         },
     # PLOT 1
         "apilar": "¿Apilar gráfico PIB y Turismo?",
@@ -34,13 +35,13 @@ textos = {
         "titulo_plot2": "Mapa de llegadas turísticas",
         "label_anio_plot2": "Selecciona un año:",
     # PLOT 4
-        "titulo_plot4": "Ranking Global por datos absloutos",
+        "titulo_plot4": "Ranking Global por datos absolutos:",
         "label_indicador_plot4": "Indicador:",
         "label_rango_anios_plot4": "Rango de años:",
         "eje_x_valor_plot4": "Valor",
         "eje_y_pais_plot4": "País",
     # PLOT 6
-        "titulo_plot6": "Ranking Global por datos relativos",
+        "titulo_plot6": "Ranking Global por datos relativos:",
         "label_indicador_plot6": "Indicador",
     #PLOT 5
         "titulo_plot5": "{indicador_x} vs {indicador_y}",
@@ -68,7 +69,8 @@ textos = {
             "expenditures_travel": "Travel items expenditures (US$)",
             "expenditures_transport": "Passenger transport expenditures (US$)",
             "receipts_exports": "Tourism receipts (% exports)",
-            "expenditures_imports": "Tourism expenditures (% imports)"
+            "expenditures_imports": "Tourism expenditures (% imports)",
+            "GDP": "GDP (US$)"
         },
         "cerrar": "Close",
     # PLOT 1
@@ -85,13 +87,13 @@ textos = {
         "titulo_plot2": "Tourist arrivals map",
         "label_anio_plot2": "Select a year:",
     # PLOT 4
-        "titulo_plot4": "Global ranking: {indicador}",
+        "titulo_plot4": "Global ranking by absolute data:",
         "label_indicador_plot4": "Ondicator:",
         "label_rango_anios_plot4": "Range of years:",
         "eje_x_valor_plot4": "Value",
         "eje_y_pais_plot4": "Country",
     # PLOT 6
-        "titulo_plot6": "Ranking of countries by",
+        "titulo_plot6": "Global ranking by relative data:",
         "label_indicador_plot6": "Select a relative indicator",
     #PLOT 5
         "titulo_plot5": "{indicador_x} vs {indicador_y}",

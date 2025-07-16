@@ -1,9 +1,9 @@
 from dash import dash_table
 import pandas as pd
 
-import sys
+'''import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))'''
 from utils.textos_idioma import textos
 
 
@@ -22,7 +22,7 @@ def plot6_indicadores(idioma="es"):
 def generar_plot6(df, id_indicador, rango_anios, idioma="es"):
     indicador = INDICADORES_DISPONIBLES[id_indicador]
 
-    ## CREACIÓN DEL DATAFRAME:
+## CREACIÓN DEL DATAFRAME:
     df_filtrado = df[(df["Series Name"] == indicador) &
                      (df["Year"] >= rango_anios[0]) & (df["Year"] <= rango_anios[1])]
     # Agrupar por país y calcular promedio
@@ -40,7 +40,7 @@ def generar_plot6(df, id_indicador, rango_anios, idioma="es"):
     # Preparar dataframe para la tabla con columnas separadas
     df_tabla = df_ordenado[["Rank", nombre_col, "Value_formateado"]]
 
-    ## CREACIÓN DE LA TABLA:
+## CREACIÓN DE LA TABLA:
     tabla = dash_table.DataTable(
         columns=[{"name": "", "id": col} for col in df_tabla.columns],
         data=df_tabla.to_dict("records"),
@@ -49,7 +49,7 @@ def generar_plot6(df, id_indicador, rango_anios, idioma="es"):
         page_action="none",
         style_table={
             "overflowY": "auto",
-            "maxHeight": "300px",
+            "height": "250px",
             "width": "200px"
         },
         style_cell={
