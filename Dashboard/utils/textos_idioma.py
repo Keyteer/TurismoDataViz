@@ -53,9 +53,16 @@ textos = {
         "label_filtrar_top3_plot5": "Filtrar top",
         "mensaje_indicadores_iguales": "No se puede seleccionar el mismo indicador en ambos ejes. Se ha ajustado automáticamente.",
         "label_filtrar_topn_plot5": "Excluir los N países con mayor valor en X",
+    # PLOT 7
+        "titulo_plot7": "Comparación de {indicador_x} y {indicador_y} en {pais}",
+        "label_anio_plot7": "Año",
     # PANEL INFO
         "titulo_panel_info": "Indicadores clave de {pais}"
     },
+
+
+
+
     "en": {
     # Para el dashboard
         "titulo": "Dashboard: Tourism and GDP",
@@ -91,6 +98,8 @@ textos = {
     # PLOT 2
         "titulo_plot2": "Tourist arrivals map",
         "label_anio_plot2": "Select a year:",
+    # PLOT 3
+        "titulo_plot3": "Comparison of {indicador_x} and {indicador_y} in {pais}",
     # PLOT 4
         "titulo_plot4": "Global ranking by absolute data:",
         "label_indicador_plot4": "Ondicator:",
@@ -108,6 +117,9 @@ textos = {
         "label_filtrar_top3_plot5": "Filter top",
         "mensaje_indicadores_iguales": "You cannot select the same indicator on both axes. It has been adjusted automatically.",
         "label_filtrar_topn_plot5": "Exclude top N countries by X value",
+    # PLOT 7
+        "titulo_plot7": "Comparison of {indicador_x} and {indicador_y} in {pais}",
+        "label_anio_plot7": "Year",
     # PANEL INFO
         "titulo_panel_info": "Key indicators for {pais}"
     }

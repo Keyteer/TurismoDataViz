@@ -15,6 +15,7 @@ from plots.plot4 import generar_plot4, plot4_indicadores
 from plots.plot5 import generar_plot5, plot5_indicadores
 from plots.plot6 import generar_plot6, plot6_indicadores
 from plots.plot7 import generar_plot7, plot7_indicadores
+from plots.panelinfo import generar_panel_info
 from utils.textos_idioma import textos
 
 
@@ -290,8 +291,7 @@ app.layout = html.Div([
                     ),
                     width="auto"
                 ),
-            ], className="mb-3", justify="center", style={"textAlign": "center"})
-            ,
+            ], className="mb-3", justify="center", style={"textAlign": "center"}),
 
             dcc.Graph(
                 id="grafico-plot5",
@@ -303,7 +303,28 @@ app.layout = html.Div([
 
         style={"maxWidth": "650px", "margin": "auto", "padding": "20px"}
     ),
-###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 7 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PANEL INFO +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+
+    html.Div([
+        html.Label(id="label-seleccion-pais"),
+        dcc.RangeSlider(
+                        id="rango-anios-panel",
+                        min=1995,
+                        max=2022,
+                        step=1,
+                        value=[2015, 2020],
+                        marks={year: str(year) if (year - 1995) % 10 == 0 else "" for year in range(1995, 2023)},
+                        tooltip={"placement": "bottom", "always_visible": False},
+                        updatemode="drag"
+        ),
+        html.Div(
+            id="panel-info",
+            style={"height": "300px", "width": "300px", "justify": "center"}
+        )
+    ]),
+
+    ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 7 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
     html.Div(
         children=[
             html.H4(id="titulo-plot7", style={"textAlign": "center"}),
@@ -311,7 +332,6 @@ app.layout = html.Div([
             html.Label(id="label-indicador-plot7"),
             dcc.Dropdown(
                 id="dropdown-indicador-plot7",
-                options=plot7_indicadores(),
                 value="arrivals",
                 clearable=False,
                 style={"whiteSpace": "normal"}
@@ -323,8 +343,7 @@ app.layout = html.Div([
         id="plot7",
 
         style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
-    )
-    
+    ),
 ])
 
 
@@ -540,6 +559,16 @@ def actualizar_plot5(id_indicador_x, id_indicador_y, rango_anios, idioma, n):
         t["label_filtrar_top3_plot5"],
         mensaje
     )
+
+# PANEL INFO
+@app.callback(
+    Output("panel-info", "children"),
+    Input("dropdown-pais", "value"),
+    Input("rango-anios-panel", "value"),
+    Input("radio-idioma", "value")
+)
+def actualizar_panel_info(codigo_pais, rango_anios, idioma):
+    return generar_panel_info(df, codigo_pais, rango_anios, idioma)
 
 # PLOT 7
 @app.callback(

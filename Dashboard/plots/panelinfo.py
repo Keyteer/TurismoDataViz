@@ -25,7 +25,7 @@ INDICADORES_PORCENTUALES = {
     "expenditures_imports"
 }
 
-def generar_panel_info(df, country_code, idioma="es", anio_inicio=None, anio_fin=None):
+def generar_panel_info(df, country_code, rango_anios, idioma="es"):
     t = textos.get(idioma, {})
     etiquetas = t.get("indicadores_df1", {})
 ## CREACIÓN DEL DATAFRAME:
@@ -33,11 +33,9 @@ def generar_panel_info(df, country_code, idioma="es", anio_inicio=None, anio_fin
     df_pais = df[df["Country Code"] == country_code]
     if df_pais.empty:
         return html.Div([html.P("País no encontrado")])
-    # Filtrar por año (si aplica)
-    if anio_inicio is not None:
-        if anio_fin is None:
-            anio_fin = anio_inicio
-        df_pais = df_pais[(df_pais["Year"] >= anio_inicio) & (df_pais["Year"] <= anio_fin)]
+    # Filtrar por año
+    if rango_anios:
+        df_pais = df_pais[df_pais["Year"].between(rango_anios[0], rango_anios[1])]
     # Nombre del país según idioma
     col_nombre = "Country Name" if idioma == "en" else "Nombre Español"
     nombre_pais = df_pais[col_nombre].iloc[0]
@@ -74,7 +72,7 @@ def generar_panel_info(df, country_code, idioma="es", anio_inicio=None, anio_fin
                     className="shadow-sm h-100",
                     style={"padding": "4px"}
                 ),
-                width=6
+                width=12
             )
         )
 
@@ -91,7 +89,7 @@ def generar_panel_info(df, country_code, idioma="es", anio_inicio=None, anio_fin
                 "overflowY": "auto"
             }
         )
-    ], style={"width": "245px", "height": "250px", "padding": "5px"})
+    ], style={"width": "260px", "height": "250px", "padding": "5px"})
 
 
 if __name__ == "__main__":
