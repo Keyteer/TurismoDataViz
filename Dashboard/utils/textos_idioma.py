@@ -36,8 +36,6 @@ textos = {
         "label_anio_plot2": "Selecciona un año:",
     # PLOT 3
         "titulo_plot3": "Comparación de {indicador_x} y {indicador_y} en {pais}",
-        "label_indicador_x_plot3": "Indicador en eje X",
-        "label_indicador_y_plot3": "Indicador en eje Y",
     # PLOT 4
         "titulo_plot4": "Ranking Global por datos absolutos:",
         "label_indicador_plot4": "Indicador:",

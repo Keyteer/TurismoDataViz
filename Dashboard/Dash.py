@@ -10,9 +10,11 @@ import dash_bootstrap_components as dbc
 from utils.cargarDataframes import df1, load_arrivals_df
 from plots.plot1 import generar_plot1
 from plots.plot2 import generar_plot2
+from plots.plot3 import generar_plot3, plot3_indicadores
 from plots.plot4 import generar_plot4, plot4_indicadores
 from plots.plot5 import generar_plot5, plot5_indicadores
 from plots.plot6 import generar_plot6, plot6_indicadores
+from plots.plot7 import generar_plot7, plot7_indicadores
 from utils.textos_idioma import textos
 
 
@@ -139,6 +141,47 @@ app.layout = html.Div([
         style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
     ),
 
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 3 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+    html.Div(
+        children=[
+            html.H4(id="titulo-plot3", style={"textAlign": "center"}),
+
+            html.Label(id="label-indicador-y-plot3"),
+            dcc.Dropdown(
+                id="dropdown-indicador-plot3",
+                options=plot3_indicadores(),
+                value="arrivals",
+                clearable=False,
+                style={"whiteSpace": "normal"}
+            ),
+
+            html.Label(id="label-seleccion-anio-plot3"),
+            dbc.Row(children=[
+                dbc.Col(html.Label(id="label-anio-plot3"), width="auto", style={"textAlign": "left"}),
+                dbc.Col(
+                    dcc.Slider(
+                        id='slider-plot3',
+                        min=1995,
+                        max=2020,
+                        value=2008,
+                        marks={year: str(year) if (year - 1995) % 5 == 0 else "" for year in range(1995, 2023)},
+                        step=1,  # Permite seleccionar solo los años disponibles
+                        included=False,  # Eliminar rango
+                        tooltip={"placement": "bottom", "always_visible": False},
+                        updatemode="drag",  # Para actualizar al arrastrar
+                    ),
+                    width=True, style={"textAlign": "center"}
+                ),
+            ], className="mb-3", justify="center", style={"textAlign": "center"}),
+
+            dcc.Graph(id="grafico-plot3")
+        ],
+
+        id="plot3",
+
+        style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
+    ),
+
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 4 y 6  -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+###
     html.Div(
         id="plot4-6-container",
@@ -259,8 +302,29 @@ app.layout = html.Div([
         id="plot5",
 
         style={"maxWidth": "650px", "margin": "auto", "padding": "20px"}
-    )
+    ),
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 7 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+    html.Div(
+        children=[
+            html.H4(id="titulo-plot7", style={"textAlign": "center"}),
 
+            html.Label(id="label-indicador-plot7"),
+            dcc.Dropdown(
+                id="dropdown-indicador-plot7",
+                options=plot7_indicadores(),
+                value="arrivals",
+                clearable=False,
+                style={"whiteSpace": "normal"}
+            ),
+
+            dcc.Graph(id="grafico-plot7")
+        ],
+
+        id="plot7",
+
+        style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
+    )
+    
 ])
 
 
@@ -349,6 +413,38 @@ def actualizar_mapa(anio):
     with open("plots/plot2.html", "r", encoding="utf-8") as f:
         return f.read()
 
+#PLOT 3
+@app.callback(
+    Output("grafico-plot3", "figure"),
+    Output("titulo-plot3", "children"),
+    Output("dropdown-indicador-plot3", "options"),
+    Input("dropdown-indicador-plot3", "value"),
+    Input("slider-plot3", "value"),
+    Input("dropdown-pais", "value"), 
+    Input("radio-idioma", "value")
+)
+def actualizar_plot3(id_indicador_1, year,pais_codigo, idioma):
+    
+    id_indicador_2 = "departures"
+    
+    if id_indicador_1 == "receipts_total":
+        id_indicador_2 = "expenditures_total"
+    elif id_indicador_1 == "receipts_travel":
+        id_indicador_2 = "expenditures_travel"
+    elif id_indicador_1 == "receipts_transport":
+        id_indicador_2 = "expenditures_transport"
+
+    fig = generar_plot3(df, pais_codigo, id_indicador_1, id_indicador_2, year=year, idioma=idioma)
+    t = textos.get(idioma)
+    return (
+        fig,
+        t["titulo_plot3"].format(
+            indicador_x=t["indicadores_df1"][id_indicador_1],
+            indicador_y=t["indicadores_df1"][id_indicador_2],
+            pais=pais_codigo
+        ),
+        plot3_indicadores(idioma),
+    )
 # PLOT 4
 @app.callback(
     Output("grafico-plot4", "figure"),
@@ -445,7 +541,23 @@ def actualizar_plot5(id_indicador_x, id_indicador_y, rango_anios, idioma, n):
         mensaje
     )
 
-
+# PLOT 7
+@app.callback(
+    Output("grafico-plot7", "figure"),
+    Output("titulo-plot7", "children"),
+    Output("dropdown-indicador-plot7", "options"),
+    Input("dropdown-indicador-plot7", "value"),
+    Input("dropdown-pais", "value"),
+    Input("radio-idioma", "value")
+)
+def actualizar_plot7(id_indicador, pais_codigo, idioma):
+    t = textos.get(idioma, textos["es"])
+    fig = generar_plot7(df, id_indicador, pais_codigo, idioma)
+    return (
+        fig,
+        t["titulo_plot7"].format(indicador=t["indicadores_df1"][id_indicador]),
+        plot7_indicadores(idioma)
+    )
 
 '''################################################################################################'''
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ EJECUTAR APP -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###

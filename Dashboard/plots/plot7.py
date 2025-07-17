@@ -1,9 +1,9 @@
 import plotly.express as px
 import pandas as pd
 
-import sys
+'''import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))'''
 from utils.textos_idioma import textos
 
 INDICADORES_DISPONIBLES = {
@@ -11,14 +11,14 @@ INDICADORES_DISPONIBLES = {
     "departures": "International tourism, number of departures"
 }
 
-def plot4_indicadores(idioma="es"):
+def plot7_indicadores(idioma="es"):
     t = textos.get(idioma)
     return [
         {"label": t["indicadores_df1"][key], "value": key}
         for key in INDICADORES_DISPONIBLES
     ]
 
-def generar_plot7(df, Country_Code, id_indicador, idioma="es"):
+def generar_plot7(df, id_indicador, Country_Code, idioma="es"):
     
     t = textos.get(idioma)
     indicador = INDICADORES_DISPONIBLES[id_indicador]
