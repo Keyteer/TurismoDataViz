@@ -66,9 +66,9 @@ def generar_plot3(df, Country_Code,id_indicador_1, id_indicador_2, year=2008, id
     df_d = pd.merge(df_1, df_2, on="Year", how="inner")
 
     # Verificar si hay datos para ese año
-    if df_d.empty:
+    '''if df_d.empty:
         print(f"No hay datos disponibles para el año {year} en el país {Country_Code}")
-        return None
+        return None'''
     
     # Crear DataFrame para el pie chart con los valores normalizados
     pie_data = pd.DataFrame({

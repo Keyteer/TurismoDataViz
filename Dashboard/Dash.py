@@ -584,7 +584,10 @@ def actualizar_plot7(id_indicador, pais_codigo, idioma):
     fig = generar_plot7(df, id_indicador, pais_codigo, idioma)
     return (
         fig,
-        t["titulo_plot7"].format(indicador=t["indicadores_df1"][id_indicador]),
+        t["titulo_plot7"].format(
+            indicador=t["indicadores_df1"][id_indicador],
+            pais = pais_codigo
+            ),
         plot7_indicadores(idioma)
     )
 
