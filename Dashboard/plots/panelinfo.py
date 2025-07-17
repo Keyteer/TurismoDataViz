@@ -20,6 +20,10 @@ INDICADORES_DISPONIBLES = {
     "expenditures_imports": "International tourism, expenditures (% of total imports)",
     "GDP": "GDP (current US$)"
 }
+INDICADORES_PORCENTUALES = {
+    "receipts_exports",
+    "expenditures_imports"
+}
 
 def generar_panel_info(df, country_code, idioma="es", anio_inicio=None, anio_fin=None):
     t = textos.get(idioma, {})
@@ -43,7 +47,15 @@ def generar_panel_info(df, country_code, idioma="es", anio_inicio=None, anio_fin
     tarjetas = []
     for key, serie in INDICADORES_DISPONIBLES.items():
         label = etiquetas.get(key, key)
-        valor = df_pais[df_pais["Series Name"] == serie]["Value"].sum()
+
+        valores = df_pais[df_pais["Series Name"] == serie]["Value"]
+        if valores.empty:
+            valor = 0
+        elif key in INDICADORES_PORCENTUALES:
+            valor = valores.mean()
+        else:
+            valor = valores.sum()
+
         tarjetas.append(
             dbc.Col(
                 dbc.Card(
@@ -52,7 +64,7 @@ def generar_panel_info(df, country_code, idioma="es", anio_inicio=None, anio_fin
                             "fontSize": "12px",
                             "fontFamily": "Arial, sans-serif"
                         }),
-                        html.P(f"{valor:,.0f}", style={
+                        html.P(f"{valor:,.3f}", style={
                             "fontWeight": "bold",
                             "fontSize": "12px",
                             "margin": "0",
@@ -80,6 +92,7 @@ def generar_panel_info(df, country_code, idioma="es", anio_inicio=None, anio_fin
             }
         )
     ], style={"width": "245px", "height": "250px", "padding": "5px"})
+
 
 if __name__ == "__main__":
     from dash import Dash
