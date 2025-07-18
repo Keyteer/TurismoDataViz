@@ -18,10 +18,10 @@ COLORES_INDICADORES = {
 }
 
 OPCIONES_DISPONIBLES = {
-    "arrivals": "International tourism, number of arrivals",
-    "receipts_total": "International tourism, receipts  (current US$)",
-    "receipts_travel": "International tourism, receipts for travel items (current US$)",
-    "receipts_transport": "International tourism, receipts for passenger transport items (current US$)",
+    "arrivals": "Llegadas internacionales vs salidas internacionales",
+    "receipts_total": "Ingresos VS gastos totales por turismo (US$)",
+    "receipts_travel": "Ingresos VS gastos por actividades del viaje (US$)",
+    "receipts_transport": "Ingresos VS gastos por transporte de pasajeros (US$)",
     }
 
 INDICADORES_DISPONIBLES = {
@@ -38,7 +38,7 @@ INDICADORES_DISPONIBLES = {
 def plot3_indicadores(idioma="es"):
     t = textos.get(idioma)
     return [
-        {"label": t["indicadores_df1"][key], "value": key}
+        {"label": t["opciones_pie"][key], "value": key}
         for key in OPCIONES_DISPONIBLES
     ]
 
