@@ -51,7 +51,7 @@ app.layout = html.Div([
             dbc.Button("ajustes", id="btn-ajustes", n_clicks=0, color="secondary", size="sm"),
             width="auto", style={"textAlign": "right"}
         )
-    ], align="center", className="mb-3", style={"backgroundColor": "#00a2bb"}),
+    ], align="center", className="mb-3", style={"backgroundColor": "#00a2bb", "border": "2px solid #007bb5", "borderRadius": "5px", "padding": "10px"}),
 
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- Modal de Ajustes +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
     dbc.Modal(
@@ -82,7 +82,6 @@ app.layout = html.Div([
     ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 4 y 6  -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+###
             html.Div(
                 id="plot4-6-container",
-                # style={"margin": "auto", "padding": "10px", "width": "490px", "height": "450px"},
                 children=[
                     dbc.Row([
                         # TITULOS
@@ -136,7 +135,8 @@ app.layout = html.Div([
                             )
                         ], width=12)
                     ])
-                ]
+                ],
+                style={"border": "2px solid #dee2e6", "borderRadius": "8px", "padding": "15px", "backgroundColor": "#ffffff", "marginBottom": "20px"}
             ),
 
 
@@ -205,7 +205,7 @@ app.layout = html.Div([
 
                 id="plot5",
 
-                # style={"maxWidth": "650px", "margin": "auto", "padding": "20px"}
+                style={"border": "2px solid #dee2e6", "borderRadius": "8px", "padding": "15px", "backgroundColor": "#ffffff"}
             ),
         ], width=3, style={"textAlign": "center"}),
 
@@ -241,7 +241,7 @@ app.layout = html.Div([
 
                 id="plot2",
 
-                style={"maxWidth": "900px", "heigth": 3}  # "margin": "auto", "padding": "20px"}
+                style={"maxWidth": "900px", "heigth": 3, "border": "2px solid #dee2e6", "borderRadius": "8px", "padding": "15px", "backgroundColor": "#ffffff", "marginBottom": "20px"}
             ),
             dbc.Row([
                 dbc.Col([
@@ -262,7 +262,7 @@ app.layout = html.Div([
                             id="panel-info",
                             # style={"height": "300px", "width": "300px", "justify": "center"}
                         )
-                    ]),
+                    ], style={"border": "2px solid #dee2e6", "borderRadius": "8px", "padding": "15px", "backgroundColor": "#ffffff"}),
                 ], width=5),
                 dbc.Col([
 
@@ -301,7 +301,7 @@ app.layout = html.Div([
 
                         id="plot3",
 
-                        # style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
+                        style={"border": "2px solid #dee2e6", "borderRadius": "8px", "padding": "15px", "backgroundColor": "#ffffff"}
                     ),
 
 
@@ -311,12 +311,14 @@ app.layout = html.Div([
 
         dbc.Col([
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ Seleccionar país +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
-            html.H6(id="label-seleccion-pais", style={"textAlign": "center"}),
-            dcc.Dropdown(
-                id="dropdown-pais",
-                value="MDV",
-                clearable=False
-            ),
+            html.Div([
+                html.H6(id="label-seleccion-pais", style={"textAlign": "center"}),
+                dcc.Dropdown(
+                    id="dropdown-pais",
+                    value="MDV",
+                    clearable=False
+                ),
+            ], style={"border": "2px solid #dee2e6", "borderRadius": "8px", "padding": "15px", "backgroundColor": "#ffffff", "marginBottom": "20px"}),
 
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 7 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
             html.Div(
@@ -336,7 +338,7 @@ app.layout = html.Div([
 
                 id="plot7",
 
-                style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
+                style={"maxWidth": "900px", "margin": "auto", "padding": "20px", "border": "2px solid #dee2e6", "borderRadius": "8px", "backgroundColor": "#ffffff", "marginBottom": "20px"}
             ),
 
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 1 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
@@ -363,13 +365,13 @@ app.layout = html.Div([
 
                 id="plot1",
 
-                style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
+                style={"maxWidth": "900px", "margin": "auto", "padding": "20px", "border": "2px solid #dee2e6", "borderRadius": "8px", "backgroundColor": "#ffffff"}
             ),
 
         ], width=3)
     ]),
 
-], style={"backgroundColor": "#c3d8e4", "minHeight": "100vh", "padding": "0px"})
+], style={"backgroundColor": "#c3d8e4", "minHeight": "100vh", "padding": "10px"})
 
 
 
