@@ -1,4 +1,5 @@
-import plotly.express as px
+import plotly.graph_objects as go
+import matplotlib.colors as mcolors
 import pandas as pd
 
 '''import sys
@@ -48,19 +49,48 @@ def generar_plot5(df, id_indicador_x, id_indicador_y, rango_anios, idioma="es", 
     df_merge = df_merge.sort_values("X", ascending=False).iloc[filter_top:]
     # Elegir columna de nombre según idioma
     nombre_col = "Country Name" if idioma == "en" else "Nombre Español"
+    # Aplicar filtro top solo si válido
+    if filter_top > 0 and filter_top < len(df_merge):
+        df_merge = df_merge.iloc[filter_top:]
+    # Verificar que haya datos
+    if df_merge.empty:
+        raise ValueError("No hay datos suficientes para mostrar el gráfico.")
 
 ## CREACIÓN DEL PLOT:
-    fig = px.scatter(
-        df_merge,
-        x="X",
-        y="Y",
-        hover_name=nombre_col,
-        labels={
-            "X": t["indicadores_df1"][id_indicador_x],
-            "Y": t["indicadores_df1"][id_indicador_y]
-        }
+    # Creación gradientes de color
+    color_inicio = "#0d8b4e"
+    color_final = "#a6e3c2"
+    valores_norm = (df_merge["X"] - df_merge["X"].min()) / (df_merge["X"].max() - df_merge["X"].min())
+    valores_norm = valores_norm.fillna(0)
+    cmap = mcolors.LinearSegmentedColormap.from_list("verde_gradiente", [color_inicio, color_final])
+    colores_puntos = [mcolors.to_hex(cmap(v)) for v in valores_norm]
+    # Crear el gráfico de dispersión
+    fig = go.Figure()
+    for idx, (_, row) in enumerate(df_merge.iterrows()):
+        fig.add_trace(go.Scatter(
+            x=[row["X"]],
+            y=[row["Y"]],
+            mode="markers",
+            marker=dict(
+                color=colores_puntos[idx],  # usar idx en lugar de i
+                size=10,
+                line=dict(width=0.5, color="black")
+            ),
+            hovertemplate=(
+                f"{row[nombre_col]}<br>"
+                f"{t['indicadores_df1'][id_indicador_x]}: {row['X']:,}<br>"
+                f"{t['indicadores_df1'][id_indicador_y]}: {row['Y']:,}<extra></extra>"
+            ),
+            showlegend=False
+        ))
+
+    fig.update_layout(
+        xaxis_title=t["indicadores_df1"][id_indicador_x],
+        yaxis_title=t["indicadores_df1"][id_indicador_y],
+        template="plotly_white",
+        margin=dict(l=40, r=10, t=40, b=40)
     )
-    fig.update_layout(template="plotly_white", margin=dict(l=40, r=10, t=40, b=40))
+
     return fig
 
 if __name__ == "__main__":

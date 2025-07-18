@@ -40,7 +40,8 @@ def generar_plot1(df, Country_Code, apilar=True, idioma="es"):
         mode="lines",
         name=t["turismo"],
         fill=fill_turismo,
-        line=dict(width=0.5),
+        line=dict(width=0.5, color="black"),
+        fillcolor='rgba(153, 218, 255, 0.4)',
         stackgroup="one" if apilar else None,
     ))
     # Añadir trazas para PIB restante
@@ -50,7 +51,8 @@ def generar_plot1(df, Country_Code, apilar=True, idioma="es"):
         mode="lines",
         name=t["pib_restante"],
         fill=fill_pib,
-        line=dict(width=0.5),
+        line=dict(width=0.5, color="black"),
+        fillcolor='rgba(126, 217, 87, 0.4)',
         stackgroup="one" if apilar else None,
     ))
     # Elegir nombre del país según el idioma
