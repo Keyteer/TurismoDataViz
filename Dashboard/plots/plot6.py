@@ -49,7 +49,7 @@ def generar_plot6(df, id_indicador, rango_anios, idioma="es"):
         page_action="none",
         style_table={
             "overflowY": "auto",
-            "height": "250px",
+            "height": "300px",
             "width": "200px"
         },
         style_cell={

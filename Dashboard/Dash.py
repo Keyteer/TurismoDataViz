@@ -96,7 +96,11 @@ app.layout = html.Div([
                                 id="dropdown-indicador-plot6",
                                 value="receipts_exports",
                                 clearable=False,
-                                style={"whiteSpace": "normal"}
+                                style={
+                                    "whiteSpace": "normal",
+                                    "wordWrap": "break-word",
+                                    "fontSize": "12px"
+                                }
                             ), width=6
                         ),
                         dbc.Col(
@@ -104,7 +108,11 @@ app.layout = html.Div([
                                 id="dropdown-indicador-plot4",
                                 value="arrivals",
                                 clearable=False,
-                                style={"whiteSpace": "normal"}
+                                style={
+                                    "whiteSpace": "normal",
+                                    "wordWrap": "break-word",
+                                    "fontSize": "12px"
+                                }
                             ), width=6
                         ),
                     ], className="mb-3"),
@@ -152,7 +160,11 @@ app.layout = html.Div([
                                 id="dropdown-indicador-x-plot5",
                                 value="GDP",
                                 clearable=False,
-                                style={"whiteSpace": "normal"}
+                                style={
+                                    "whiteSpace": "normal",
+                                    "wordWrap": "break-word",
+                                    "fontSize": "12px"
+                                }
                             ),
                         ]),
                         dbc.Col([
@@ -161,7 +173,11 @@ app.layout = html.Div([
                                 id="dropdown-indicador-y-plot5",
                                 value="receipts_exports",
                                 clearable=False,
-                                style={"whiteSpace": "normal"}
+                                style={
+                                    "whiteSpace": "normal",
+                                    "wordWrap": "break-word",
+                                    "fontSize": "12px"
+                                }
                             ),
                             html.Div(id="plot5-aviso-repetido"),
                         ]),
@@ -277,7 +293,11 @@ app.layout = html.Div([
                                 options=plot3_indicadores(),
                                 value="arrivals",
                                 clearable=False,
-                                style={"whiteSpace": "normal"}
+                                style={
+                                    "whiteSpace": "normal",
+                                    "wordWrap": "break-word",
+                                    "fontSize": "12px"
+                                }
                             ),
 
                             html.Label(id="label-seleccion-anio-plot3"),
@@ -316,7 +336,13 @@ app.layout = html.Div([
                 dcc.Dropdown(
                     id="dropdown-pais",
                     value="MDV",
-                    clearable=False
+                    clearable=False,
+                    style={
+                        "whiteSpace": "normal",
+                        "wordWrap": "break-word",
+                        "fontSize": "12px"
+                    },
+
                 ),
             ], style={"border": "2px solid #dee2e6", "borderRadius": "8px", "padding": "15px", "backgroundColor": "#ffffff", "marginBottom": "20px"}),
 
@@ -330,7 +356,11 @@ app.layout = html.Div([
                         id="dropdown-indicador-plot7",
                         value="arrivals",
                         clearable=False,
-                        style={"whiteSpace": "normal"}
+                        style={
+                            "whiteSpace": "normal",
+                            "wordWrap": "break-word",
+                            "fontSize": "12px"
+                        }
                     ),
 
                     dcc.Graph(id="grafico-plot7")
