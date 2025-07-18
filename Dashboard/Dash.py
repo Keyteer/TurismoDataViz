@@ -166,35 +166,37 @@ app.layout = html.Div([
                             html.Div(id="plot5-aviso-repetido"),
                         ]),
                     ]),
-
-                    html.Label(id="label-rango-anios-plot5"),
-                    dcc.RangeSlider(
-                        id="rango-anios-plot5",
-                        min=1995,
-                        max=2022,
-                        step=1,
-                        value=[2015, 2020],
-                        marks={year: str(year) if (year - 1995) % 5 == 0 else "" for year in range(1995, 2023)},
-                        tooltip={"placement": "bottom", "always_visible": False},
-                        updatemode="drag",
-                    ),
-
-                    dbc.Row(children=[
-                        dbc.Col(html.Label(id="label-filtrar-topn-plot5"), width="auto"),
-                        dbc.Col(
-                            dcc.Input(
-                                id="input-filtrar-topn-plot5",
-                                type="number",
-                                min=0,
-                                max=100,
+                    dbc.Row([
+                        dbc.Col([
+                            html.Label(id="label-rango-anios-plot5"),
+                            dcc.RangeSlider(
+                                id="rango-anios-plot5",
+                                min=1995,
+                                max=2022,
                                 step=1,
-                                value=0,
-                                # style={"width": "80px", "textAlign": "center"}
+                                value=[2015, 2020],
+                                marks={year: str(year) if (year - 1995) % 5 == 0 else "" for year in range(1995, 2023)},
+                                tooltip={"placement": "bottom", "always_visible": False},
+                                updatemode="drag",
                             ),
-                            width="auto"
-                        ),
-                    ], className="mb-3", justify="center", style={"textAlign": "center"}),
-
+                        ], width=True),
+                        dbc.Col([
+                            dbc.Col([
+                                html.Div( html.Label(id="label-filtrar-topn-plot5", style={"textAlign": "left", "width": "50px"}),),
+                                html.Div(
+                                    dcc.Input(
+                                        id="input-filtrar-topn-plot5",
+                                        type="number",
+                                        min=0,
+                                        max=100,
+                                        step=1,
+                                        value=0,
+                                        # style={"width": "80px", "textAlign": "center"}
+                                    )
+                                ),
+                            ]),
+                        ], width=2, style={"textAlign": "center"}),
+                    ]),
                     dcc.Graph(
                         id="grafico-plot5",
                         # style={"height": "600px", "width": "600px", "overflowY": "scroll", "justify": "center"}
@@ -367,7 +369,7 @@ app.layout = html.Div([
         ], width=3)
     ]),
 
-])
+], style={"backgroundColor": "#c3d8e4", "minHeight": "100vh", "padding": "0px"})
 
 
 
