@@ -195,7 +195,7 @@ app.layout = html.Div([
                                 tooltip={"placement": "bottom", "always_visible": False},
                                 updatemode="drag",
                             ),
-                        ], width=True),
+                        ], width=9),
                         dbc.Col([
                             dbc.Col([
                                 html.Div( html.Label(id="label-filtrar-topn-plot5", style={"textAlign": "left", "width": "50px"}),),
@@ -654,4 +654,4 @@ def actualizar_plot7(id_indicador, pais_codigo, idioma):
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ EJECUTAR APP -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
 '''################################################################################################'''
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
