@@ -1,4 +1,5 @@
 import plotly.graph_objects as go
+import matplotlib.colors as mcolors
 import pandas as pd
 
 '''import sys
@@ -17,6 +18,9 @@ INDICADORES_DISPONIBLES = {
     "expenditures_travel": "International tourism, expenditures for travel items (current US$)",
     "expenditures_transport": "International tourism, expenditures for passenger transport items (current US$)",
 }
+# Colores para el gradiente: verde oscuro a verde claro
+color_inicio = "#0d8b4e"  # verde
+color_final = "#a6e3c2"   # verde clarito
 
 def plot4_indicadores(idioma="es"):
     t = textos.get(idioma)
@@ -46,25 +50,39 @@ def generar_plot4(df, id_indicador, rango_anios, idioma="es"):
     df_ordenado["Label"] = df_ordenado["Rank"].astype(str)
 
 ## CREACIÓN DEL GRÁFICO:
+
     # Seleccionar umbral
     umbral = df_ordenado["Value"].max() * 0.3
+
     # Generar una lista de colores según umbral
     colores_texto = [
         "white" if v > umbral else "black"
         for v in df_ordenado["Value"]
     ]
+
     # Determinar posición del texto según umbral
     text_positions = [
         "inside" if v > umbral else "outside"
         for v in df_ordenado["Value"]
     ]
+
+    # Colores para el gradiente: verde oscuro a verde claro
+    color_inicio = "#a6e3c2"  # verde
+    color_final = "#0d8b4e"  # verde clarito
+    # Normalizar los valores para el gradiente
+    valores = df_ordenado["Value"]
+    valores_norm = (valores - valores.min()) / (valores.max() - valores.min())
+    # Interpolar colores en el gradiente
+    cmap = mcolors.LinearSegmentedColormap.from_list("verde_gradiente", [color_inicio, color_final])
+    colores_barras = [mcolors.to_hex(cmap(v)) for v in valores_norm]
+
     # Asignar valores al plot
     fig = go.Figure(go.Bar(
         x=df_ordenado["Value"],
         y=df_ordenado["Label"], # Usar Rank como etiqueta
         orientation="h",
         marker=dict(
-            color='#1f77b4',  # Color azul
+            color=colores_barras,
             line=dict(color='black', width=0.7)  # Borde negro
         ),
         text=df_ordenado[nombre_col], # Texto a mostrar
