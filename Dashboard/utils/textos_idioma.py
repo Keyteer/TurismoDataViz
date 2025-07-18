@@ -6,6 +6,7 @@ textos = {
         "seleccion_pais": "Selecciona un país:",
     # Modal ajustes
         "idioma_label": "Selecciona el idioma que prefieres para los países:",
+        "modal_titulo_ajustes": "Ajustes del Dashboard",
         "cerrar": "Cerrar",
     # Para los indicadores del DataFrame 1
         "indicadores_df1": {
@@ -24,8 +25,8 @@ textos = {
     # PLOT 1
         "apilar": "¿Apilar gráfico PIB y Turismo?",
         "check_apilar": " Apilar",
-        "grafico_titulo_apilado": "Aporte del turismo al PIB de {pais} (apilado)",
-        "grafico_titulo_no_apilado": "Aporte del turismo al PIB de {pais} (no apilado)",
+        "grafico_titulo_apilado": "Aporte del turismo al PIB",
+        "grafico_titulo_no_apilado": "Aporte del turismo al PIB",
         "eje_x": "Año",
         "eje_y": "PIB (US)",
         "leyenda": "Fuente",
@@ -35,7 +36,7 @@ textos = {
         "titulo_plot2": "Mapa de llegadas turísticas",
         "label_anio_plot2": "Selecciona un año:",
     # PLOT 3
-        "titulo_plot3": "Comparación de:",
+        "titulo_plot3": "Piechart comparativo de:",
     # PLOT 4
         "titulo_plot4": "Ranking Global por datos absolutos:",
         "label_indicador_plot4": "Indicador:",
@@ -46,7 +47,7 @@ textos = {
         "titulo_plot6": "Ranking Global por datos relativos:",
         "label_indicador_plot6": "Indicador",
     # PLOT 5
-        "titulo_plot5": "{indicador_x} vs {indicador_y}",
+        "titulo_plot5": "Scatterplot comparativo:",
         "label_indicador_x_plot5": "Indicador en eje X",
         "label_indicador_y_plot5": "Indicador en eje Y",
         "label_rango_anios_plot5": "Rango de años",
@@ -54,7 +55,7 @@ textos = {
         "mensaje_indicadores_iguales": "No se puede seleccionar el mismo indicador en ambos ejes. Se ha ajustado automáticamente.",
         "label_filtrar_topn_plot5": "Excluir los N países con mayor valor en X",
     # PLOT 7
-        "titulo_plot7": "{indicador} de  {pais} entre 1995 y 2020",
+        "titulo_plot7": "{indicador} a través del tiempo:",
         "label_anio_plot7": "Año",
     # PANEL INFO
         "titulo_panel_info": "Indicadores clave de {pais}"
@@ -70,6 +71,8 @@ textos = {
         "seleccion_pais": "Select a country:",
     # Para Modal ajustes
         "idioma_label": "Choose your preferred language for countries:",
+        "modal_titulo_ajustes": "Dashboard Settings",
+        "cerrar": "Close",
     # Para los indicadores del DataFrame 1
         "indicadores_df1": {
             "arrivals": "International arrivals",
@@ -84,12 +87,11 @@ textos = {
             "expenditures_imports": "Tourism expenditures (% imports)",
             "GDP": "GDP (US$)"
         },
-        "cerrar": "Close",
     # PLOT 1
         "apilar": "Stack GDP and Tourism graph?",
         "check_apilar": " Stack",
-        "grafico_titulo_apilado": "Tourism's contribution to {pais} GDP (stacked)",
-        "grafico_titulo_no_apilado": "Tourism's contribution to {pais} GDP (not stacked)",
+        "grafico_titulo_apilado": "Contribution of tourism to GDP",
+        "grafico_titulo_no_apilado": "Contribution of tourism to GDP",
         "eje_x": "Year",
         "eje_y": "GDP (US)",
         "leyenda": "Source",
@@ -99,7 +101,7 @@ textos = {
         "titulo_plot2": "Tourist arrivals map",
         "label_anio_plot2": "Select a year:",
     # PLOT 3
-        "titulo_plot3": "Comparison of:",
+        "titulo_plot3": "Comparative piechart of:",
     # PLOT 4
         "titulo_plot4": "Global ranking by absolute data:",
         "label_indicador_plot4": "Ondicator:",
@@ -110,7 +112,7 @@ textos = {
         "titulo_plot6": "Global ranking by relative data:",
         "label_indicador_plot6": "Select a relative indicator",
     # PLOT 5
-        "titulo_plot5": "{indicador_x} vs {indicador_y}",
+        "titulo_plot5": "Comparative scatterplot:",
         "label_indicador_x_plot5": "Indicator for X axis",
         "label_indicador_y_plot5": "Indicator for Y axis",
         "label_rango_anios_plot5": "Range of years",
@@ -118,7 +120,7 @@ textos = {
         "mensaje_indicadores_iguales": "You cannot select the same indicator on both axes. It has been adjusted automatically.",
         "label_filtrar_topn_plot5": "Exclude top N countries by X value",
     # PLOT 7
-        "titulo_plot7": "{indicador} in {pais} from 1995 to 2020",
+        "titulo_plot7": "{indicador} over time:",
         "label_anio_plot7": "Year",
     # PANEL INFO
         "titulo_panel_info": "Key indicators for {pais}"

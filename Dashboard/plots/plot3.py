@@ -7,14 +7,14 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))'
 from utils.textos_idioma import textos
 
 COLORES_INDICADORES = {
-    "arrivals": "#1f77b4",           # Azul
-    "departures": "#ff7f0e",         # Naranja
-    "receipts_total": "#2ca02c",     # Verde
-    "receipts_travel": "#d62728",    # Rojo
-    "receipts_transport": "#9467bd", # Púrpura
-    "expenditures_total": "#8c564b", # Marrón
-    "expenditures_travel": "#e377c2", # Rosa
-    "expenditures_transport": "#7f7f7f" # Gris
+    "arrivals": "#0d66c6",
+    "departures": "#06ae3b",
+    "receipts_total": "#0f8294",
+    "receipts_travel": "#0f61c5",
+    "receipts_transport": "#0f3492",
+    "expenditures_total": "#09b252",
+    "expenditures_travel": "#127209", 
+    "expenditures_transport": "#0c9d15" 
 }
 
 OPCIONES_DISPONIBLES = {
@@ -92,6 +92,18 @@ def generar_plot3(df, Country_Code,id_indicador_1, id_indicador_2, rango_anio, i
         names='Categoria',
         color_discrete_sequence=colores_fijos,
         hover_data=['Valores']
+    )
+
+    fig.update_traces(
+        legendgroup=None,
+        showlegend=True
+    )
+
+    fig.update_layout(
+        legend=dict(
+            itemclick=False,      # Desactiva click simple
+            itemdoubleclick=False # Desactiva doble click
+        )
     )
 
     return fig
