@@ -158,22 +158,19 @@ app.layout = html.Div([
 
             html.Label(id="label-seleccion-anio-plot3"),
             dbc.Row(children=[
-                dbc.Col(html.Label(id="label-anio-plot3"), width="auto", style={"textAlign": "left"}),
-                dbc.Col(
-                    dcc.Slider(
-                        id='slider-plot3',
+                dbc.Col([
+                    dcc.RangeSlider(
+                        id='rango-anios-plot3',
                         min=1995,
                         max=2020,
-                        value=2008,
+                        step=1,
+                        value=[2002, 2003],
                         marks={year: str(year) if (year - 1995) % 5 == 0 else "" for year in range(1995, 2023)},
-                        step=1,  # Permite seleccionar solo los años disponibles
-                        included=False,  # Eliminar rango
                         tooltip={"placement": "bottom", "always_visible": False},
-                        updatemode="drag",  # Para actualizar al arrastrar
-                    ),
-                    width=True, style={"textAlign": "center"}
-                ),
-            ], className="mb-3", justify="center", style={"textAlign": "center"}),
+                        updatemode="drag"
+                    )
+                ], width=12)
+            ]),
 
             dcc.Graph(id="grafico-plot3")
         ],
@@ -324,7 +321,7 @@ app.layout = html.Div([
         )
     ]),
 
-    ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 7 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 7 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
     html.Div(
         children=[
             html.H4(id="titulo-plot7", style={"textAlign": "center"}),
@@ -438,11 +435,11 @@ def actualizar_mapa(anio):
     Output("titulo-plot3", "children"),
     Output("dropdown-indicador-plot3", "options"),
     Input("dropdown-indicador-plot3", "value"),
-    Input("slider-plot3", "value"),
+    Input("rango-anios-plot3", "value"),
     Input("dropdown-pais", "value"), 
     Input("radio-idioma", "value")
 )
-def actualizar_plot3(id_indicador_1, year,pais_codigo, idioma):
+def actualizar_plot3(id_indicador_1, radio_anio, pais_codigo, idioma):
     
     id_indicador_2 = "departures"
     
@@ -453,7 +450,7 @@ def actualizar_plot3(id_indicador_1, year,pais_codigo, idioma):
     elif id_indicador_1 == "receipts_transport":
         id_indicador_2 = "expenditures_transport"
 
-    fig = generar_plot3(df, pais_codigo, id_indicador_1, id_indicador_2, year=year, idioma=idioma)
+    fig = generar_plot3(df, pais_codigo, id_indicador_1, id_indicador_2, radio_anio, idioma=idioma)
     t = textos.get(idioma)
     return (
         fig,
