@@ -9,12 +9,12 @@ from utils.textos_idioma import textos
 COLORES_INDICADORES = {
     "arrivals": "#0d66c6",
     "departures": "#06ae3b",
-    "receipts_total": "#0f8294",
+    "receipts_total": "#1082c4",
     "receipts_travel": "#0f61c5",
-    "receipts_transport": "#0f3492",
+    "receipts_transport": "#1264C7",
     "expenditures_total": "#09b252",
-    "expenditures_travel": "#127209", 
-    "expenditures_transport": "#0c9d15" 
+    "expenditures_travel": "#45C019", 
+    "expenditures_transport": "#1ac542" 
 }
 
 OPCIONES_DISPONIBLES = {
