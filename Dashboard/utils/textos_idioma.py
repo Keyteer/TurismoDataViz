@@ -35,7 +35,7 @@ textos = {
         "titulo_plot2": "Mapa de llegadas turísticas",
         "label_anio_plot2": "Selecciona un año:",
     # PLOT 3
-        "titulo_plot3": "Comparación de {indicador_x} y {indicador_y} en {pais}",
+        "titulo_plot3": "Comparación de:",
     # PLOT 4
         "titulo_plot4": "Ranking Global por datos absolutos:",
         "label_indicador_plot4": "Indicador:",
@@ -99,7 +99,7 @@ textos = {
         "titulo_plot2": "Tourist arrivals map",
         "label_anio_plot2": "Select a year:",
     # PLOT 3
-        "titulo_plot3": "Comparison of {indicador_x} and {indicador_y} in {pais}",
+        "titulo_plot3": "Comparison of:",
     # PLOT 4
         "titulo_plot4": "Global ranking by absolute data:",
         "label_indicador_plot4": "Ondicator:",

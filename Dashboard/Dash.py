@@ -297,66 +297,67 @@ app.layout = html.Div([
                 ], width=5)
             ], className="mb-3", justify="center", style={"textAlign": "center"}),
         ], width=6, style={"textAlign": "center"}),
-    ]),
 
+        dbc.Col([
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ Seleccionar país +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
-    html.Label(id="label-seleccion-pais"),
-    dcc.Dropdown(
-        id="dropdown-pais",
-        value="MDV",
-        clearable=False
-    ),
-
-###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 1 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
-    html.Div(
-        children=[
-            html.H4(id="titulo-plot1", style={"textAlign": "center"}),
-
-            dbc.Row(children=[
-                dbc.Col(html.Label(id="label-apilar"), width="auto"),
-                dbc.Col(
-                    dcc.Checklist(
-                        id="check-plot1",
-                        options=[],
-                        value=["apilar"],
-                        inline=True,
-                        style={"marginBottom": "0px"}
-                    ),
-                    width="auto"
-                ),
-            ], className="mb-3", justify="center", style={"textAlign": "center"}),
-
-            dcc.Graph(id="grafico-turismo-pib")
-        ],
-
-        id="plot1",
-
-        style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
-    ),
-
-
-
-
-###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 7 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
-    html.Div(
-        children=[
-            html.H4(id="titulo-plot7", style={"textAlign": "center"}),
-
-            html.Label(id="label-indicador-plot7"),
+            html.Label(id="label-seleccion-pais"),
             dcc.Dropdown(
-                id="dropdown-indicador-plot7",
-                value="arrivals",
-                clearable=False,
-                style={"whiteSpace": "normal"}
+                id="dropdown-pais",
+                value="MDV",
+                clearable=False
             ),
 
-            dcc.Graph(id="grafico-plot7")
-        ],
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 7 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+            html.Div(
+                children=[
+                    html.H4(id="titulo-plot7", style={"textAlign": "center"}),
 
-        id="plot7",
+                    html.Label(id="label-indicador-plot7"),
+                    dcc.Dropdown(
+                        id="dropdown-indicador-plot7",
+                        value="arrivals",
+                        clearable=False,
+                        style={"whiteSpace": "normal"}
+                    ),
 
-        style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
-    ),
+                    dcc.Graph(id="grafico-plot7")
+                ],
+
+                id="plot7",
+
+                style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
+            ),
+
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 1 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+            html.Div(
+                children=[
+                    html.H4(id="titulo-plot1", style={"textAlign": "center"}),
+
+                    dbc.Row(children=[
+                        dbc.Col(html.Label(id="label-apilar"), width="auto"),
+                        dbc.Col(
+                            dcc.Checklist(
+                                id="check-plot1",
+                                options=[],
+                                value=["apilar"],
+                                inline=True,
+                                style={"marginBottom": "0px"}
+                            ),
+                            width="auto"
+                        ),
+                    ], className="mb-3", justify="center", style={"textAlign": "center"}),
+
+                    dcc.Graph(id="grafico-turismo-pib")
+                ],
+
+                id="plot1",
+
+                style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
+            ),
+
+        ], width=3)
+    ]),
+
 ])
 
 
