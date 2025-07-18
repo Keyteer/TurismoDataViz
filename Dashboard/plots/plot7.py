@@ -51,7 +51,8 @@ def generar_plot7(df, id_indicador, Country_Code, idioma="es"):
         },
         markers=True,
         template="plotly_white",
-        color_discrete_sequence=["#26b74d"]
+        color_discrete_sequence=["#26b74d"],
+        height=400,
     )
 
     
