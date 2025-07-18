@@ -71,7 +71,7 @@ def generar_plot1(df, Country_Code, apilar=True, idioma="es"):
         yaxis_title=t["eje_y"],
         template="plotly_white",
         legend_title=t["leyenda"],
-        height=400,
+        height=395,
         # leyenda custom segun t["turismo"] y t["pib_restante"]
 
 

@@ -89,7 +89,7 @@ def generar_panel_info(df, country_code, rango_anios, idioma="es"):
                 "overflowY": "auto"
             }
         )
-    ], style={"width": "260px", "height": "325px", "padding": "5px"})
+    ], style={"width": "260px", "height": "340px", "padding": "5px"})
 
 
 if __name__ == "__main__":

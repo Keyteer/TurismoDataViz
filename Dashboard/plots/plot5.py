@@ -88,7 +88,8 @@ def generar_plot5(df, id_indicador_x, id_indicador_y, rango_anios, idioma="es", 
         xaxis_title=t["indicadores_df1"][id_indicador_x],
         yaxis_title=t["indicadores_df1"][id_indicador_y],
         template="plotly_white",
-        margin=dict(l=40, r=10, t=40, b=40)
+        margin=dict(l=40, r=10, t=40, b=40),
+        height=477
     )
 
     return fig

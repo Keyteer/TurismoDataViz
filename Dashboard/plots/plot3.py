@@ -113,7 +113,7 @@ def generar_plot3(df, Country_Code,id_indicador_1, id_indicador_2, rango_anio, i
         ),
         margin=dict(l=20, r=20, t=5, b=10),  # left, right, top, bottom
         autosize=True,
-        height=250,
+        height=255,
     )
 
     return fig
