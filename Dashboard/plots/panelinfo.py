@@ -80,7 +80,7 @@ def generar_panel_info(df, country_code, rango_anios, idioma="es"):
         html.H6(
             t.get("titulo_panel_info", "Indicadores de {pais}").format(pais=nombre_pais),
             className="text-center",
-            style={"fontSize": "13px", "marginBottom": "6px", "fontFamily": "Arial, sans-serif"}
+            style={"textAlign": "center"}
         ),
         html.Div(
             dbc.Row(tarjetas, className="gx-2 gy-2"),

@@ -52,7 +52,7 @@ app.layout = html.Div([
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- Modal de Ajustes +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
     dbc.Modal(
         [
-            dbc.ModalHeader(dbc.ModalTitle("Ajustes del Dashboard")),
+            dbc.ModalHeader(dbc.ModalTitle(id="modal-titulo-ajustes")),
             dbc.ModalBody([
                 html.Label(id="label-idioma"),
                 dcc.RadioItems(
@@ -82,8 +82,8 @@ app.layout = html.Div([
                 children=[
                     dbc.Row([
                         # TITULOS
-                        dbc.Col(html.H4(id="titulo-plot6", style={"textAlign": "center"}), width=6),
-                        dbc.Col(html.H4(id="titulo-plot4", style={"textAlign": "center"}), width=6),
+                        dbc.Col(html.H6(id="titulo-plot6", style={"textAlign": "center"}), width=6),
+                        dbc.Col(html.H6(id="titulo-plot4", style={"textAlign": "center"}), width=6),
                     ], className="mb-2"),
 
                     dbc.Row([
@@ -139,7 +139,7 @@ app.layout = html.Div([
     ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 5 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
             html.Div(
                 children=[
-                    html.H4(id="titulo-plot5", style={"textAlign": "center"}),
+                    html.H6(id="titulo-plot5", style={"textAlign": "center"}),
 
                     html.Label(id="label-indicador-x-plot5"),
                     dcc.Dropdown(
@@ -202,7 +202,7 @@ app.layout = html.Div([
     ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 2 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
             html.Div(
                 children=[
-                    html.H4(id="titulo-plot2", style={"textAlign": "center"}),
+                    html.H6(id="titulo-plot2", style={"textAlign": "center"}),
 
                     dbc.Row(children=[
                         dbc.Col(html.Label(id="label-anio-plot2"), width="auto", style={"textAlign": "left"}),
@@ -258,7 +258,7 @@ app.layout = html.Div([
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 3 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
                     html.Div(
                         children=[
-                            html.H4(id="titulo-plot3", style={"textAlign": "center"}),
+                            html.H6(id="titulo-plot3", style={"textAlign": "center"}),
 
                             html.Label(id="label-indicador-y-plot3"),
                             dcc.Dropdown(
@@ -310,7 +310,7 @@ app.layout = html.Div([
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 7 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
             html.Div(
                 children=[
-                    html.H4(id="titulo-plot7", style={"textAlign": "center"}),
+                    html.H6(id="titulo-plot7", style={"textAlign": "center"}),
 
                     html.Label(id="label-indicador-plot7"),
                     dcc.Dropdown(
@@ -331,7 +331,7 @@ app.layout = html.Div([
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 1 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
             html.Div(
                 children=[
-                    html.H4(id="titulo-plot1", style={"textAlign": "center"}),
+                    html.H6(id="titulo-plot1", style={"textAlign": "center"}),
 
                     dbc.Row(children=[
                         dbc.Col(html.Label(id="label-apilar"), width="auto"),
@@ -390,6 +390,7 @@ def toggle_modal(n_abrir, n_cerrar):
     Output("check-plot1", "options"),
     Output("titulo-plot2", "children"),
     Output("label-anio-plot2", "children"),
+    Output("modal-titulo-ajustes", "children"),
     Input("radio-idioma", "value")
 )
 def actualizar_textos_y_options(idioma):
@@ -418,7 +419,8 @@ def actualizar_textos_y_options(idioma):
         opciones_paises,
         check_plot1,
         t["titulo_plot2"],
-        t["label_anio_plot2"]
+        t["label_anio_plot2"],
+        t["modal_titulo_ajustes"],
 
     )
 

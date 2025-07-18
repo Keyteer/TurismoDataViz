@@ -8,7 +8,16 @@ from utils.textos_idioma import textos
 
 INDICADORES_DISPONIBLES = {
     "arrivals": "International tourism, number of arrivals",
-    "departures": "International tourism, number of departures"
+    "departures": "International tourism, number of departures",
+    "receipts_total": "International tourism, receipts (current US$)",
+    "receipts_travel": "International tourism, receipts for travel items (current US$)",
+    "receipts_transport": "International tourism, receipts for passenger transport items (current US$)",
+    "expenditures_total": "International tourism, expenditures (current US$)",
+    "expenditures_travel": "International tourism, expenditures for travel items (current US$)",
+    "expenditures_transport": "International tourism, expenditures for passenger transport items (current US$)",
+    "receipts_exports": "International tourism, receipts (% of total exports)",
+    "expenditures_imports": "International tourism, expenditures (% of total imports)",
+    "GDP": "GDP (current US$)"
 }
 
 def plot7_indicadores(idioma="es"):
