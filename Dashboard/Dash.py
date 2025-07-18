@@ -305,7 +305,7 @@ app.layout = html.Div([
 
         dbc.Col([
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ Seleccionar país +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
-            html.Label(id="label-seleccion-pais"),
+            html.H6(id="label-seleccion-pais", style={"textAlign": "center"}),
             dcc.Dropdown(
                 id="dropdown-pais",
                 value="MDV",
