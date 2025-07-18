@@ -101,9 +101,16 @@ def generar_plot3(df, Country_Code,id_indicador_1, id_indicador_2, rango_anio, i
 
     fig.update_layout(
         legend=dict(
-            itemclick=False,      # Desactiva click simple
-            itemdoubleclick=False # Desactiva doble click
-        )
+            itemclick=False,  
+            itemdoubleclick=False,
+            orientation="h",           
+            yanchor="bottom",
+            y=-0.10,
+            xanchor="center",
+            x=0.5,
+        ),
+        margin=dict(l=20, r=20, t=5, b=10),  # left, right, top, bottom
+        autosize=True
     )
 
     return fig
