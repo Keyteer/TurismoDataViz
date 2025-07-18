@@ -48,9 +48,9 @@ def generar_plot6(df, id_indicador, rango_anios, idioma="es"):
         filter_action="none",
         page_action="none",
         style_table={
-            "overflowY": "auto",
+            "overflowY": "None",
             "height": "300px",
-            "width": "200px"
+            "width": "175px"
         },
         style_cell={
             "padding": "6px",
@@ -65,14 +65,14 @@ def generar_plot6(df, id_indicador, rango_anios, idioma="es"):
         style_cell_conditional=[
             {"if": {"column_id": "Rank"},
                 "textAlign": "center",
-                "width": "16%"},
+                "width": "20%"},
             {"if": {"column_id": nombre_col},
                 "textAlign": "left",
                 "borderRight": "right",
                 "width": "auto"},
             {"if": {"column_id": "Value_formateado"},
                 "textAlign": "center",
-                "width": "18%"}
+                "width": "20%"}
         ],
         style_header={
             "display": "none"
