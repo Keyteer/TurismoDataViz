@@ -111,9 +111,10 @@ def generar_plot3(df, Country_Code,id_indicador_1, id_indicador_2, rango_anio, i
             font=dict(size=11),
 
         ),
-        margin=dict(l=20, r=20, t=5, b=10),  # left, right, top, bottom
+        margin=dict(l=4, r=4, t=5, b=10),  # left, right, top, bottom
         autosize=True,
         height=255,
+        width=210,
     )
 
     return fig
