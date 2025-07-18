@@ -290,7 +290,6 @@ app.layout = html.Div([
                             html.Label(id="label-indicador-y-plot3"),
                             dcc.Dropdown(
                                 id="dropdown-indicador-plot3",
-                                options=plot3_indicadores(),
                                 value="arrivals",
                                 clearable=False,
                                 style={
@@ -502,16 +501,22 @@ def actualizar_mapa(anio):
     Input("radio-idioma", "value")
 )
 def actualizar_plot3(id_indicador_1, radio_anio, pais_codigo, idioma):
-    
-    id_indicador_2 = "departures"
-    
-    if id_indicador_1 == "receipts_total":
-        id_indicador_2 = "expenditures_total"
-    elif id_indicador_1 == "receipts_travel":
-        id_indicador_2 = "expenditures_travel"
-    elif id_indicador_1 == "receipts_transport":
-        id_indicador_2 = "expenditures_transport"
+    t = textos.get(idioma, textos["es"])
 
+    pares_indicadores = {
+        "departures": "arrivals",
+        "receipts_total": "expenditures_total",
+        "receipts_travel": "expenditures_travel",
+        "receipts_transport": "expenditures_transport",
+    }
+    id_indicador_2 = pares_indicadores.get(id_indicador_1, "departures")
+    opciones = [
+        {
+            "label": f'{t["indicadores_df1"][k]} vs {t["indicadores_df1"][v]}',
+            "value": k
+        }
+        for k, v in pares_indicadores.items()
+    ]
     fig = generar_plot3(df, pais_codigo, id_indicador_1, id_indicador_2, radio_anio, idioma=idioma)
     t = textos.get(idioma)
     return (
@@ -521,7 +526,7 @@ def actualizar_plot3(id_indicador_1, radio_anio, pais_codigo, idioma):
             indicador_y=t["indicadores_df1"][id_indicador_2],
             pais=pais_codigo
         ),
-        plot3_indicadores(idioma),
+        opciones
     )
 # PLOT 4
 @app.callback(
