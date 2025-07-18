@@ -47,7 +47,7 @@ app.layout = html.Div([
             dbc.Button("ajustes", id="btn-ajustes", n_clicks=0, color="secondary", size="sm"),
             width="auto", style={"textAlign": "right"}
         )
-    ], align="center", className="mb-3"),
+    ], align="center", className="mb-3", style={"backgroundColor": "#00a2bb"}),
 
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- Modal de Ajustes +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
     dbc.Modal(
@@ -141,22 +141,27 @@ app.layout = html.Div([
                 children=[
                     html.H6(id="titulo-plot5", style={"textAlign": "center"}),
 
-                    html.Label(id="label-indicador-x-plot5"),
-                    dcc.Dropdown(
-                        id="dropdown-indicador-x-plot5",
-                        value="GDP",
-                        clearable=False,
-                        style={"whiteSpace": "normal"}
-                    ),
-
-                    html.Label(id="label-indicador-y-plot5"),
-                    dcc.Dropdown(
-                        id="dropdown-indicador-y-plot5",
-                        value="receipts_exports",
-                        clearable=False,
-                        style={"whiteSpace": "normal"}
-                    ),
-                    html.Div(id="plot5-aviso-repetido"),
+                    dbc.Row([
+                        dbc.Col([
+                            html.Label(id="label-indicador-x-plot5"),
+                            dcc.Dropdown(
+                                id="dropdown-indicador-x-plot5",
+                                value="GDP",
+                                clearable=False,
+                                style={"whiteSpace": "normal"}
+                            ),
+                        ]),
+                        dbc.Col([
+                            html.Label(id="label-indicador-y-plot5"),
+                            dcc.Dropdown(
+                                id="dropdown-indicador-y-plot5",
+                                value="receipts_exports",
+                                clearable=False,
+                                style={"whiteSpace": "normal"}
+                            ),
+                            html.Div(id="plot5-aviso-repetido"),
+                        ]),
+                    ]),
 
                     html.Label(id="label-rango-anios-plot5"),
                     dcc.RangeSlider(
