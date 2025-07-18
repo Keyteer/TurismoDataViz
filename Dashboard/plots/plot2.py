@@ -21,12 +21,12 @@ def generar_plot2(df, year=2020):
         data=df,
         columns=['Country', str(year)],
         key_on='feature.properties.name',
-        fill_color='YlOrRd',
+        fill_color='Greens',
         fill_opacity=0.7,
         line_opacity=0.2,
         legend_name=f'Inbound Arrivals in {year}',
         threshold_scale=threshold_scale,
-        nan_fill_color='#ffffff',
+        nan_fill_color='#808080',
         legend_kwds={'spacing': '4000px'}
     ).add_to(map_arrivals)
 

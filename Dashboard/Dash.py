@@ -73,6 +73,234 @@ app.layout = html.Div([
         is_open=False,
     ),
 
+    dbc.Row([
+        dbc.Col([
+    ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 4 y 6  -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+###
+            html.Div(
+                id="plot4-6-container",
+                # style={"margin": "auto", "padding": "10px", "width": "490px", "height": "450px"},
+                children=[
+                    dbc.Row([
+                        # TITULOS
+                        dbc.Col(html.H4(id="titulo-plot6", style={"textAlign": "center"}), width=6),
+                        dbc.Col(html.H4(id="titulo-plot4", style={"textAlign": "center"}), width=6),
+                    ], className="mb-2"),
+
+                    dbc.Row([
+                        # DROPDOWNS
+                        dbc.Col(
+                            dcc.Dropdown(
+                                id="dropdown-indicador-plot6",
+                                value="receipts_exports",
+                                clearable=False,
+                                style={"whiteSpace": "normal"}
+                            ), width=6
+                        ),
+                        dbc.Col(
+                            dcc.Dropdown(
+                                id="dropdown-indicador-plot4",
+                                value="arrivals",
+                                clearable=False,
+                                style={"whiteSpace": "normal"}
+                            ), width=6
+                        ),
+                    ], className="mb-3"),
+
+                    dbc.Row([
+                        # TABLA PLOT 6 + GRAFICO PLOT 4
+                        dbc.Col(html.Div(id="tabla-plot6", style={
+                            "height": "250px", "overflowY": "auto"
+                        }), width=6),
+
+                        dbc.Col(dcc.Graph(id="grafico-plot4", style={
+                            "height": "250px", "overflowY": "auto", "justify": "center"
+                        }), width=6),
+                    ], className="mb-4"),
+
+                    dbc.Row([
+                        dbc.Col([
+                            html.Label(id="label-rango-anios-plot4"),
+                            dcc.RangeSlider(
+                                id="rango-anios-plot4",
+                                min=1995,
+                                max=2022,
+                                step=1,
+                                value=[2015, 2020],
+                                marks={year: str(year) if (year - 1995) % 5 == 0 else "" for year in range(1995, 2023)},
+                                tooltip={"placement": "bottom", "always_visible": False},
+                                updatemode="drag"
+                            )
+                        ], width=12)
+                    ])
+                ]
+            ),
+
+
+    ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 5 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+            html.Div(
+                children=[
+                    html.H4(id="titulo-plot5", style={"textAlign": "center"}),
+
+                    html.Label(id="label-indicador-x-plot5"),
+                    dcc.Dropdown(
+                        id="dropdown-indicador-x-plot5",
+                        value="GDP",
+                        clearable=False,
+                        style={"whiteSpace": "normal"}
+                    ),
+
+                    html.Label(id="label-indicador-y-plot5"),
+                    dcc.Dropdown(
+                        id="dropdown-indicador-y-plot5",
+                        value="receipts_exports",
+                        clearable=False,
+                        style={"whiteSpace": "normal"}
+                    ),
+                    html.Div(id="plot5-aviso-repetido"),
+
+                    html.Label(id="label-rango-anios-plot5"),
+                    dcc.RangeSlider(
+                        id="rango-anios-plot5",
+                        min=1995,
+                        max=2022,
+                        step=1,
+                        value=[2015, 2020],
+                        marks={year: str(year) if (year - 1995) % 5 == 0 else "" for year in range(1995, 2023)},
+                        tooltip={"placement": "bottom", "always_visible": False},
+                        updatemode="drag",
+                    ),
+
+                    dbc.Row(children=[
+                        dbc.Col(html.Label(id="label-filtrar-topn-plot5"), width="auto"),
+                        dbc.Col(
+                            dcc.Input(
+                                id="input-filtrar-topn-plot5",
+                                type="number",
+                                min=0,
+                                max=100,
+                                step=1,
+                                value=0,
+                                # style={"width": "80px", "textAlign": "center"}
+                            ),
+                            width="auto"
+                        ),
+                    ], className="mb-3", justify="center", style={"textAlign": "center"}),
+
+                    dcc.Graph(
+                        id="grafico-plot5",
+                        # style={"height": "600px", "width": "600px", "overflowY": "scroll", "justify": "center"}
+                    )
+                ],
+
+                id="plot5",
+
+                # style={"maxWidth": "650px", "margin": "auto", "padding": "20px"}
+            ),
+        ], width=3, style={"textAlign": "center"}),
+
+        dbc.Col([
+    ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 2 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+            html.Div(
+                children=[
+                    html.H4(id="titulo-plot2", style={"textAlign": "center"}),
+
+                    dbc.Row(children=[
+                        dbc.Col(html.Label(id="label-anio-plot2"), width="auto", style={"textAlign": "left"}),
+                        dbc.Col(
+                            dcc.Slider(
+                                id='slider-plot2',
+                                min=int(arrivals_df.columns[1]),
+                                max=int(arrivals_df.columns[-1]),
+                                value=2008,
+                                marks={
+                                    int(a): str(a) if i % 3 == 0 else "" # Mostrar cada 3 años
+                                    for i, a in enumerate(arrivals_df.columns[1:])
+                                },
+                                step=1,  # Permite seleccionar solo los años disponibles
+                                included=False,  # Eliminar rango
+                                tooltip={"placement": "bottom", "always_visible": False},
+                                updatemode="drag",  # Para actualizar al arrastrar
+                            ),
+                            width=True, style={"textAlign": "center"}
+                        ),
+                    ], className="mb-3", justify="center", style={"textAlign": "center"}),
+
+                    html.Iframe(id="mapa-plot2", srcDoc=None, width="100%", height="600px", style={"display": "block"})
+                ],
+
+                id="plot2",
+
+                style={"maxWidth": "900px", "heigth": 3}  # "margin": "auto", "padding": "20px"}
+            ),
+            dbc.Row([
+                dbc.Col([
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PANEL INFO +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+                    html.Div([
+                        html.Label(id="label-seleccion-pais"),
+                        dcc.RangeSlider(
+                                        id="rango-anios-panel",
+                                        min=1995,
+                                        max=2022,
+                                        step=1,
+                                        value=[2015, 2020],
+                                        marks={year: str(year) if (year - 1995) % 10 == 0 else "" for year in range(1995, 2023)},
+                                        tooltip={"placement": "bottom", "always_visible": False},
+                                        updatemode="drag"
+                        ),
+                        html.Div(
+                            id="panel-info",
+                            # style={"height": "300px", "width": "300px", "justify": "center"}
+                        )
+                    ]),
+                ], width=5),
+                dbc.Col([
+
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 3 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+                    html.Div(
+                        children=[
+                            html.H4(id="titulo-plot3", style={"textAlign": "center"}),
+
+                            html.Label(id="label-indicador-y-plot3"),
+                            dcc.Dropdown(
+                                id="dropdown-indicador-plot3",
+                                options=plot3_indicadores(),
+                                value="arrivals",
+                                clearable=False,
+                                style={"whiteSpace": "normal"}
+                            ),
+
+                            html.Label(id="label-seleccion-anio-plot3"),
+                            dbc.Row(children=[
+                                dbc.Col(html.Label(id="label-anio-plot3"), width="auto", style={"textAlign": "left"}),
+                                dbc.Col(
+                                    dcc.Slider(
+                                        id='slider-plot3',
+                                        min=1995,
+                                        max=2020,
+                                        value=2008,
+                                        marks={year: str(year) if (year - 1995) % 5 == 0 else "" for year in range(1995, 2023)},
+                                        step=1,  # Permite seleccionar solo los años disponibles
+                                        included=False,  # Eliminar rango
+                                        tooltip={"placement": "bottom", "always_visible": False},
+                                        updatemode="drag",  # Para actualizar al arrastrar
+                                    ),
+                                    width=True, style={"textAlign": "center"}
+                                ),
+                            ], className="mb-3", justify="center", style={"textAlign": "center"}),
+
+                            dcc.Graph(id="grafico-plot3")
+                        ],
+
+                        id="plot3",
+
+                        # style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
+                    ),
+
+                ], width=5)
+            ], className="mb-3", justify="center", style={"textAlign": "center"}),
+        ], width=6, style={"textAlign": "center"}),
+    ]),
+
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ Seleccionar país +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
     html.Label(id="label-seleccion-pais"),
     dcc.Dropdown(
@@ -108,223 +336,10 @@ app.layout = html.Div([
         style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
     ),
 
-###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 2 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
-    html.Div(
-        children=[
-            html.H4(id="titulo-plot2", style={"textAlign": "center"}),
 
-            dbc.Row(children=[
-                dbc.Col(html.Label(id="label-anio-plot2"), width="auto", style={"textAlign": "left"}),
-                dbc.Col(
-                    dcc.Slider(
-                        id='slider-plot2',
-                        min=int(arrivals_df.columns[1]),
-                        max=int(arrivals_df.columns[-1]),
-                        value=2008,
-                        marks={
-                            int(a): str(a) if i % 3 == 0 else "" # Mostrar cada 3 años
-                            for i, a in enumerate(arrivals_df.columns[1:])
-                        },
-                        step=1,  # Permite seleccionar solo los años disponibles
-                        included=False,  # Eliminar rango
-                        tooltip={"placement": "bottom", "always_visible": False},
-                        updatemode="drag",  # Para actualizar al arrastrar
-                    ),
-                    width=True, style={"textAlign": "center"}
-                ),
-            ], className="mb-3", justify="center", style={"textAlign": "center"}),
 
-            html.Iframe(id="mapa-plot2", srcDoc=None, width="100%", height="600px", style={"display": "block"})
-        ],
 
-        id="plot2",
-
-        style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
-    ),
-
-###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 3 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
-    html.Div(
-        children=[
-            html.H4(id="titulo-plot3", style={"textAlign": "center"}),
-
-            html.Label(id="label-indicador-y-plot3"),
-            dcc.Dropdown(
-                id="dropdown-indicador-plot3",
-                options=plot3_indicadores(),
-                value="arrivals",
-                clearable=False,
-                style={"whiteSpace": "normal"}
-            ),
-
-            html.Label(id="label-seleccion-anio-plot3"),
-            dbc.Row(children=[
-                dbc.Col(html.Label(id="label-anio-plot3"), width="auto", style={"textAlign": "left"}),
-                dbc.Col(
-                    dcc.Slider(
-                        id='slider-plot3',
-                        min=1995,
-                        max=2020,
-                        value=2008,
-                        marks={year: str(year) if (year - 1995) % 5 == 0 else "" for year in range(1995, 2023)},
-                        step=1,  # Permite seleccionar solo los años disponibles
-                        included=False,  # Eliminar rango
-                        tooltip={"placement": "bottom", "always_visible": False},
-                        updatemode="drag",  # Para actualizar al arrastrar
-                    ),
-                    width=True, style={"textAlign": "center"}
-                ),
-            ], className="mb-3", justify="center", style={"textAlign": "center"}),
-
-            dcc.Graph(id="grafico-plot3")
-        ],
-
-        id="plot3",
-
-        style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
-    ),
-
-###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 4 y 6  -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+###
-    html.Div(
-        id="plot4-6-container",
-        style={"margin": "auto", "padding": "10px", "width": "490px", "height": "450px"},
-        children=[
-            dbc.Row([
-                # TITULOS
-                dbc.Col(html.H4(id="titulo-plot6", style={"textAlign": "center"}), width=6),
-                dbc.Col(html.H4(id="titulo-plot4", style={"textAlign": "center"}), width=6),
-            ], className="mb-2"),
-
-            dbc.Row([
-                # DROPDOWNS
-                dbc.Col(
-                    dcc.Dropdown(
-                        id="dropdown-indicador-plot6",
-                        value="receipts_exports",
-                        clearable=False,
-                        style={"whiteSpace": "normal"}
-                    ), width=6
-                ),
-                dbc.Col(
-                    dcc.Dropdown(
-                        id="dropdown-indicador-plot4",
-                        value="arrivals",
-                        clearable=False,
-                        style={"whiteSpace": "normal"}
-                    ), width=6
-                ),
-            ], className="mb-3"),
-
-            dbc.Row([
-                # TABLA PLOT 6 + GRAFICO PLOT 4
-                dbc.Col(html.Div(id="tabla-plot6", style={
-                    "height": "250px", "overflowY": "auto"
-                }), width=6),
-
-                dbc.Col(dcc.Graph(id="grafico-plot4", style={
-                    "height": "250px", "overflowY": "auto", "justify": "center"
-                }), width=6),
-            ], className="mb-4"),
-
-            dbc.Row([
-                dbc.Col([
-                    html.Label(id="label-rango-anios-plot4"),
-                    dcc.RangeSlider(
-                        id="rango-anios-plot4",
-                        min=1995,
-                        max=2022,
-                        step=1,
-                        value=[2015, 2020],
-                        marks={year: str(year) if (year - 1995) % 5 == 0 else "" for year in range(1995, 2023)},
-                        tooltip={"placement": "bottom", "always_visible": False},
-                        updatemode="drag"
-                    )
-                ], width=12)
-            ])
-        ]
-    ),
-
-###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 5 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
-    html.Div(
-        children=[
-            html.H4(id="titulo-plot5", style={"textAlign": "center"}),
-
-            html.Label(id="label-indicador-x-plot5"),
-            dcc.Dropdown(
-                id="dropdown-indicador-x-plot5",
-                value="GDP",
-                clearable=False,
-                style={"whiteSpace": "normal"}
-            ),
-
-            html.Label(id="label-indicador-y-plot5"),
-            dcc.Dropdown(
-                id="dropdown-indicador-y-plot5",
-                value="receipts_exports",
-                clearable=False,
-                style={"whiteSpace": "normal"}
-            ),
-            html.Div(id="plot5-aviso-repetido"),
-
-            html.Label(id="label-rango-anios-plot5"),
-            dcc.RangeSlider(
-                id="rango-anios-plot5",
-                min=1995,
-                max=2022,
-                step=1,
-                value=[2015, 2020],
-                marks={year: str(year) if (year - 1995) % 5 == 0 else "" for year in range(1995, 2023)},
-                tooltip={"placement": "bottom", "always_visible": False},
-                updatemode="drag",
-            ),
-
-            dbc.Row(children=[
-                dbc.Col(html.Label(id="label-filtrar-topn-plot5"), width="auto"),
-                dbc.Col(
-                    dcc.Input(
-                        id="input-filtrar-topn-plot5",
-                        type="number",
-                        min=0,
-                        max=100,
-                        step=1,
-                        value=0,
-                        style={"width": "80px", "textAlign": "center"}
-                    ),
-                    width="auto"
-                ),
-            ], className="mb-3", justify="center", style={"textAlign": "center"}),
-
-            dcc.Graph(
-                id="grafico-plot5",
-                style={"height": "600px", "width": "600px", "overflowY": "scroll", "justify": "center"}
-            )
-        ],
-
-        id="plot5",
-
-        style={"maxWidth": "650px", "margin": "auto", "padding": "20px"}
-    ),
-
-###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PANEL INFO +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
-
-    html.Div([
-        html.Label(id="label-seleccion-pais"),
-        dcc.RangeSlider(
-                        id="rango-anios-panel",
-                        min=1995,
-                        max=2022,
-                        step=1,
-                        value=[2015, 2020],
-                        marks={year: str(year) if (year - 1995) % 10 == 0 else "" for year in range(1995, 2023)},
-                        tooltip={"placement": "bottom", "always_visible": False},
-                        updatemode="drag"
-        ),
-        html.Div(
-            id="panel-info",
-            style={"height": "300px", "width": "300px", "justify": "center"}
-        )
-    ]),
-
-    ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 7 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
+###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- PLOT 7 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
     html.Div(
         children=[
             html.H4(id="titulo-plot7", style={"textAlign": "center"}),
@@ -344,6 +359,7 @@ app.layout = html.Div([
 
         style={"maxWidth": "900px", "margin": "auto", "padding": "20px"}
     ),
+
 ])
 
 
@@ -439,13 +455,13 @@ def actualizar_mapa(anio):
     Output("dropdown-indicador-plot3", "options"),
     Input("dropdown-indicador-plot3", "value"),
     Input("slider-plot3", "value"),
-    Input("dropdown-pais", "value"), 
+    Input("dropdown-pais", "value"),
     Input("radio-idioma", "value")
 )
 def actualizar_plot3(id_indicador_1, year,pais_codigo, idioma):
-    
+
     id_indicador_2 = "departures"
-    
+
     if id_indicador_1 == "receipts_total":
         id_indicador_2 = "expenditures_total"
     elif id_indicador_1 == "receipts_travel":
