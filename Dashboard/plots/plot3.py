@@ -42,7 +42,7 @@ def plot3_indicadores(idioma="es"):
         for key in OPCIONES_DISPONIBLES
     ]
 
-def generar_plot3(df, Country_Code,id_indicador_1, id_indicador_2, year=2008, idioma="es"):
+def generar_plot3(df, Country_Code,id_indicador_1, id_indicador_2, rango_anio, idioma="es"):
     
     t = textos.get(idioma)
     indicador_1 = INDICADORES_DISPONIBLES[id_indicador_1]
@@ -54,26 +54,21 @@ def generar_plot3(df, Country_Code,id_indicador_1, id_indicador_2, year=2008, id
     df_1 = df[
         (df["Series Name"] == indicador_1) &
         (df["Country Code"] == Country_Code) &
-        (df["Year"] == year)
+        (df["Year"] >= rango_anio[0]) & (df["Year"] <= rango_anio[1])
     ][["Year", "Value"]].rename(columns={"Value": "Value1"})
     df_2 = df[
         (df["Series Name"] == indicador_2) &
         (df["Country Code"] == Country_Code) &
-        (df["Year"] == year)
+        (df["Year"] >= rango_anio[0]) & (df["Year"] <= rango_anio[1])
     ][["Year", "Value"]].rename(columns={"Value": "Value2"})
 
     # Unir los DataFrames filtrados por el año
     df_d = pd.merge(df_1, df_2, on="Year", how="inner")
-
-    # Verificar si hay datos para ese año
-    '''if df_d.empty:
-        print(f"No hay datos disponibles para el año {year} en el país {Country_Code}")
-        return None'''
     
     # Crear DataFrame para el pie chart con los valores normalizados
     pie_data = pd.DataFrame({
         'Categoria': [t["indicadores_df1"][id_indicador_1], t["indicadores_df1"][id_indicador_2]],
-        'Valores': [df_d['Value1'].iloc[0], df_d['Value2'].iloc[0]]
+        'Valores': [df_d['Value1'].sum(), df_d['Value2'].sum()]
     })
     
 ## CREACIÓN DEL GRÁFICO:
@@ -106,11 +101,11 @@ if __name__ == "__main__":
     df = df1(path = "../Datasets/P_Data_Extract_From_World_Development_Indicators.xlsx")
 
      # Ejemplo sin filtro de año
-    fig1 = generar_plot3(df, "USA","arrivals","departures", idioma="es")
+    fig1 = generar_plot3(df, "USA","arrivals","departures", {2021,2021}, idioma="es")
     if fig1:
         fig1.show()
     
     # Ejemplo con filtro de año específico
-    fig2 = generar_plot3(df, "USA","arrivals","departures", year=2021, idioma="es")
+    fig2 = generar_plot3(df, "USA","arrivals","departures", {2015,2021}, idioma="es")
     if fig2:
         fig2.show()
