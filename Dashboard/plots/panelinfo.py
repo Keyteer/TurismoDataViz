@@ -85,11 +85,11 @@ def generar_panel_info(df, country_code, rango_anios, idioma="es"):
         html.Div(
             dbc.Row(tarjetas, className="gx-2 gy-2"),
             style={
-                "maxHeight": "215px",
+                "maxHeight": "300px",
                 "overflowY": "auto"
             }
         )
-    ], style={"width": "260px", "height": "250px", "padding": "5px"})
+    ], style={"width": "260px", "height": "325px", "padding": "5px"})
 
 
 if __name__ == "__main__":
