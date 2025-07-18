@@ -66,6 +66,12 @@ def generar_plot1(df, Country_Code, apilar=True, idioma="es"):
     else:
        titulo = t["grafico_titulo_no_apilado"].format(pais=nombre_pais)
     # Configurar el diseño del gráfico
+    
+    fig.update_traces(
+        legendgroup=None,
+        showlegend=True
+    )
+    
     fig.update_layout(
         xaxis_title=t["eje_x"],
         yaxis_title=t["eje_y"],
@@ -73,8 +79,19 @@ def generar_plot1(df, Country_Code, apilar=True, idioma="es"):
         legend_title=t["leyenda"],
         height=395,
         # leyenda custom segun t["turismo"] y t["pib_restante"]
+        legend=dict(
+            itemclick=False,  
+            itemdoubleclick=False,
+            orientation="h",           
+            yanchor="bottom",
+            y=-0.20,
+            xanchor="center",
+            x=0.5,
+            font=dict(size=11),
 
-
+        ),
+        margin=dict(l=20, r=20, t=5, b=10),  # left, right, top, bottom
+        autosize=True,
     )
     return titulo, fig
 
