@@ -42,6 +42,10 @@ app.layout = html.Div([
 
 ###+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- Título y Botón Ajustes Dashboard +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-###
     dbc.Row(children =[
+        dbc.Col(
+            html.H1("🌍", style={"textAlign": "center", "fontSize": "3rem", "marginRight": "10px"}
+                    ),width="auto", style={"textAlign": "left"}
+        ),
         dbc.Col(html.H1(id="titulo-dashboard"), width=True, style={"textAlign": "center"}),
         dbc.Col(
             dbc.Button("ajustes", id="btn-ajustes", n_clicks=0, color="secondary", size="sm"),
